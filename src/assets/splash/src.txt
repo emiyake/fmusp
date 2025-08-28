@@ -1,0 +1,1 @@
+// src para gerar splash: https://appsco.pe/developer/splash-screens

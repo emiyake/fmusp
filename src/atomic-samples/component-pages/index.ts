@@ -1,0 +1,17 @@
+export * from './accordions.page';
+export * from './badges.page';
+export * from './buttons.page';
+export * from './cards.page';
+export * from './carousels.page';
+export * from './chips.page';
+export * from './colors.page';
+export * from './flash.page';
+export * from './forms.page';
+export * from './icons.page';
+export * from './loading.page';
+export * from './stepper.page';
+export * from './tables.page';
+export * from './tabs.page';
+export * from './typography.page';
+
+export * from './sample-icons.component';
