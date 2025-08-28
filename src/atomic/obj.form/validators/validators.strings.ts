@@ -1,0 +1,23 @@
+export const strings = {
+  email: 'O e-mail deve ser válido.',
+  cpf: 'O CPF é inválido.',
+  cnpj: 'O CNPJ é inválido.',
+  zipcode: 'CEP inválido.',
+  number: 'O campo deve ser um número.',
+  phone: 'O telefone é inválido.',
+  mustBeEqual: 'O valor não satisfaz as regras necessárias',
+  upperCase: 'O campo deve estar em letras maiúsculas.',
+  hasUpperCase: 'O campo deve ter pelo menos uma letra maiúscula',
+  hasLowerCase: 'O campo deve ter pelo menos uma letra minúscula',
+  hasAtLeastOneSubstring: 'O campo não atende os padrões necessários',
+  minLength: (length: number) => `O campo deve ter no mínimo ${length} caracteres.`,
+  maxLength: (length: number) => `O campo deve ter no máximo ${length} caracteres.`,
+  passwordMinLength: (length: number) => `Senha deve ter no mínimo ${length} caracteres`,
+  passwordSpecialChars: 'A senha deve ter no mínimo um caractere especial',
+  required: 'O campo é obrigatório',
+  date: {
+    invalidFormat: 'Insira uma data válida.',
+    future: 'Uma data futura é inválida.',
+    past: 'Essa data é muito antiga.',
+  },
+};

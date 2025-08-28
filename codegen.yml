@@ -1,0 +1,28 @@
+overwrite: true
+schema: './src/app/data/graphql/schema.json'
+documents: './src/app/data/graphql/**/*.graphql'
+config:
+  namingConvention:
+    enumValues: keep
+  scalars:
+    DateTime: string
+generates:
+  src/app/data/graphql/base-schema.ts:
+    plugins:
+      - fragment-matcher 
+      - typescript-apollo-client-helpers
+      - named-operations-object
+      - typescript
+    config:
+      useConsts: true
+  src/:
+    config:
+      withHooks: false
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: app/data/graphql/base-schema.ts
+      extension: .ts
+      folder: ../generated
+    plugins:
+      - typescript-operations
+      - typescript-react-apollo
