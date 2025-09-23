@@ -3,14 +3,20 @@
 :root {
   /* Color System */
   /* Primary Colors */
-  --color-primary-soft: rgb(0 183 158);
+  --color-primary-soft: rgb(0 183 158); 
   --color-primary-medium: rgb(0 183 158);
   --color-primary-strong: rgb(0 183 158);
 
+
   /* Secondary Colors */
-  --color-secondary-soft: rgb(15 23 42);
-  --color-secondary-medium: rgb(15 23 42);
-  --color-secondary-strong: rgb(15 23 42);
+  --color-secondary-soft: rgb(16 178 242);
+  --color-secondary-medium: rgb(16 178 242);
+  --color-secondary-strong: rgb(16 178 242);
+
+  /* Tertiary Colors */
+  --color-tertiary-soft: rgb(85 184 205);
+  --color-tertiary-medium: rgb(85 184 205);
+  --color-tertiary-strong: rgb(85 184 205);
 
   /* CTA Colors */
   --color-cta-soft: rgb(212 76 4);
@@ -66,7 +72,7 @@
 
   --color-neutral-xxsoft: rgb(30 41 59);
   --color-neutral-xsoft: rgb(51 65 85);
-  --color-neutral-soft: rgb(71 85 105);
+  --color-neutral-soft: rgb(49, 63, 81);
   --color-neutral-medium: rgb(100 116 139);
   --color-neutral-strong: rgb(226 232 240);
   --color-neutral-xstrong: rgb(241 245 249);

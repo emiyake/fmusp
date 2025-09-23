@@ -1,9 +1,7 @@
-import * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Button } from '@atomic/atm.button';
 import { Body } from '@atomic/atm.typography';
+import type { Meta } from '@storybook/react';
+import * as React from 'react';
 
 import { FlashMessage, type FlashMessageProps } from '../mol.flash-message';
 

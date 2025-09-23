@@ -1,8 +1,7 @@
-import type * as React from 'react';
+import { HamburgerButton as HamburgerButtonComponent, type HamburgerButtonProps } from '@atomic/atm.hamburger-button';
 
 import type { Meta } from '@storybook/react';
-
-import { HamburgerButton as HamburgerButtonComponent, type HamburgerButtonProps } from '@atomic/atm.hamburger-button';
+import type * as React from 'react';
 
 export default {
   title: 'Atomic/Atoms/Hamburger Button',

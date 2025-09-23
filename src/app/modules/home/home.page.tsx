@@ -1,9 +1,8 @@
-import type React from 'react';
-
 import { AuthRoutes } from '@app/modules/auth/auth.routes';
 import { LinkButton } from '@atomic/atm.button/link-button.component';
 import { H1 } from '@atomic/atm.typography';
 import { Grid } from '@atomic/obj.grid';
+import type React from 'react';
 
 const HomePage: React.FC = () => {
   return (

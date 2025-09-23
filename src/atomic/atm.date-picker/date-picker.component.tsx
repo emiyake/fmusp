@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { ptBR } from 'date-fns/locale';
+import * as React from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 
 import { style } from './date-picker.component.style';
@@ -9,10 +8,12 @@ import './date-picker.component.css';
 
 /// Based on https://reactdatepicker.com/
 interface DatePickerBaseProps {
+  className?: string;
   placeholder?: string;
   showTimeSelect?: boolean;
   disabled?: boolean;
   endSelect?: boolean;
+  filterDate?: (date: Date) => boolean;
   onFocusChange?: (focused: boolean) => void;
 }
 
@@ -65,21 +66,24 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
   const end = props.endDate ?? endDate;
 
   return (
-    <ReactDatePicker
-      className={style()}
-      locale="pt-br"
-      dateFormat={props.showTimeSelect ? 'dd/MM/yyyy - HH:mm' : 'dd/MM/yyyy'}
-      onChange={handleDateChange}
-      startDate={start}
-      endDate={end}
-      selected={props.endSelect ? end : start}
-      onFocus={handleFocusChange(true)}
-      onBlur={handleFocusChange(false)}
-      placeholderText={props.placeholder}
-      showTimeSelect={props.showTimeSelect}
-      disabled={props.disabled}
-      selectsStart={!props.endSelect}
-      selectsEnd={props.endSelect}
-    />
+    <div className={props.className}>
+      <ReactDatePicker
+        className={style()}
+        locale="pt-br"
+        dateFormat={props.showTimeSelect ? 'dd/MM/yyyy - HH:mm' : 'dd/MM/yyyy'}
+        onChange={handleDateChange}
+        startDate={start}
+        endDate={end}
+        selected={props.endSelect ? end : start}
+        onFocus={handleFocusChange(true)}
+        onBlur={handleFocusChange(false)}
+        placeholderText={props.placeholder}
+        filterDate={props.filterDate}
+        showTimeSelect={props.showTimeSelect}
+        disabled={props.disabled}
+        selectsStart={!props.endSelect}
+        selectsEnd={props.endSelect}
+      />
+    </div>
   );
 };

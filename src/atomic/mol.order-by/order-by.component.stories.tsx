@@ -1,8 +1,7 @@
-import type * as React from 'react';
+import { H4 } from '@atomic/atm.typography';
 
 import type { Meta } from '@storybook/react';
-
-import { H4 } from '@atomic/atm.typography';
+import type * as React from 'react';
 
 import { OrderBy as OrderByComponent, OrderByIcons, type OrderByProps } from './order-by.component';
 

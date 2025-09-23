@@ -46,6 +46,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     new Map<string, React.RefObject<HTMLDivElement | null>>(),
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Intentional
   React.useEffect(() => {
     _mounted.current = true;
     if (hasWindow()) {
@@ -62,6 +63,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     };
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Intentional
   React.useEffect(() => {
     if (auto) {
       prepareAutoSlide();
@@ -254,6 +256,8 @@ export const Carousel: React.FC<CarouselProps> = ({
   return (
     // TODO: keyboard support
     <div
+      aria-label="carousel"
+      role="listbox"
       className={style()}
       ref={_wrapper}
       onTouchStart={handleTouchStart}
@@ -267,7 +271,7 @@ export const Carousel: React.FC<CarouselProps> = ({
         return (
           <div
             ref={_frameRefs.current.get(`f${i}`)}
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: Intentional
             key={i}
             style={
               i === 0

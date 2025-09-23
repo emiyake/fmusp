@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { ActivityIndicator } from '@atomic/atm.activity-indicator';
+import * as React from 'react';
 
 import { style } from './loading-state.style';
 

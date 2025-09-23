@@ -1,8 +1,6 @@
-import React from 'react';
-
-import { Link, type LinkProps } from 'react-router';
-
 import { ActivityIndicator } from '@atomic/atm.activity-indicator';
+import React from 'react';
+import { Link, type LinkProps } from 'react-router';
 import { type StyleVariants, style } from './button.component.style';
 
 export interface LinkButtonProps extends StyleVariants, LinkProps {
@@ -11,6 +9,7 @@ export interface LinkButtonProps extends StyleVariants, LinkProps {
   disabled?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  ref?: React.RefObject<HTMLAnchorElement>;
 }
 
 const CursorNotAllowedWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (

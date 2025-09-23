@@ -1,7 +1,6 @@
-import { type VariantProps, tv } from 'tailwind-variants';
-
 import { input } from '@atomic/atm.typography';
 import { focusStyles } from '@atomic/obj.mixin';
+import { tv, type VariantProps } from 'tailwind-variants';
 
 export const style = tv({
   slots: {

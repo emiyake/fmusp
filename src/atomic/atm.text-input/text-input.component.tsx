@@ -1,9 +1,7 @@
-import React from 'react';
-
-import { type BaseMask, TextInputMask } from 'react-masked-text';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import type { FieldStateType } from '@atomic/obj.form/form.model';
+import React from 'react';
+import { type BaseMask, TextInputMask } from 'react-masked-text';
 import { IconButton } from './icon-button.component';
 import { style } from './text-input.component.style';
 
@@ -65,7 +63,7 @@ export type AutoCompleteType =
   | 'email'
   | 'impp';
 
-export interface TextInputProps extends FieldStateType, React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>, FieldStateType {
   invalid?: boolean;
   disabled?: boolean;
   mask?: BaseMask;
@@ -75,7 +73,7 @@ export interface TextInputProps extends FieldStateType, React.InputHTMLAttribute
   value?: string | number | string[];
   // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill-processing-model
   autoComplete?: AutoCompleteType;
-  onChange?: (eventOrValue: React.ChangeEvent<HTMLInputElement> | string) => void;
+  onChange?: (eventOrValue: string | React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface TextInputState {
@@ -85,7 +83,7 @@ export interface TextInputState {
 
 export const TextInput = React.forwardRef(
   (
-    { icon, mask, disabled, dismissable, invalid, className, type, ...props }: TextInputProps,
+    { icon, mask, disabled, dismissable, invalid, className, type, onChange, ...props }: TextInputProps,
     ref: React.ForwardedRef<HTMLInputElement>,
   ) => {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -93,7 +91,7 @@ export const TextInput = React.forwardRef(
     const val = props.value as string;
 
     const handleDismiss = () => {
-      props.onChange?.('');
+      onChange?.('');
     };
 
     const getType = () => {
@@ -148,6 +146,9 @@ export const TextInput = React.forwardRef(
           })}
           mask={mask}
           autoComplete={getAutocomplete()}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onChange?.(e);
+          }}
           disabled={disabled}
           type={getType()}
           {...props}

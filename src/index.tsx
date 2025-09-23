@@ -1,14 +1,8 @@
 import './assets/css/app.css';
 import 'reflect-metadata';
 
-import React from 'react';
-
-import { ApolloProvider } from '@apollo/client';
-import { ApolloClientBuilder } from '@app/core/graphql';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router';
 
-import { graphqlMiddlewares } from '@app/data/graphql/middleware';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -21,13 +15,9 @@ if (!container) {
 const isSSR = container.hasChildNodes();
 
 const app = (
-  <React.StrictMode>
-    <BrowserRouter>
-      <ApolloProvider client={ApolloClientBuilder.build(import.meta.env.VITE_BASE_URL, graphqlMiddlewares)}>
-        <App />
-      </ApolloProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );
 
 if (isSSR) {

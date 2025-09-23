@@ -1,14 +1,11 @@
-import * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Button } from '@atomic/atm.button';
+import { Card } from '@atomic/atm.card';
+import { FaIcon } from '@atomic/atm.fa-icon';
 import { Body, H2, H3 } from '@atomic/atm.typography';
 import { ShimmerBox } from '@atomic/mol.shimmer/shimmer.component';
 import { Flex } from '@atomic/obj.flex';
-
-import { Card } from '@atomic/atm.card';
-import { FaIcon } from '@atomic/atm.fa-icon';
+import type { Meta } from '@storybook/react';
+import * as React from 'react';
 import { LoadingState as LoadingStateComponent } from './loading-state.component';
 
 export default {

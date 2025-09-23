@@ -9,7 +9,9 @@ export class BaseStore {
   };
 
   protected publish = (): void => {
-    this.listeners.forEach(listener => listener());
+    this.listeners.forEach(listener => {
+      listener();
+    });
   };
 
   protected listeners: IStore.IListener[] = [];

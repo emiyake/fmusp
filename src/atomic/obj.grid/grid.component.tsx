@@ -1,7 +1,6 @@
 import type React from 'react';
-
-import { tv } from 'tailwind-variants';
 import type { VariantProps } from 'tailwind-variants';
+import { tv } from 'tailwind-variants';
 
 type GridType<T = any> = React.FC<
   {

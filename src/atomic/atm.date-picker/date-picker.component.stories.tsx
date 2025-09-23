@@ -1,8 +1,7 @@
-import type * as React from 'react';
+import { DatePicker as DatePickerComponent } from '@atomic/atm.date-picker';
 
 import type { Meta } from '@storybook/react';
-
-import { DatePicker as DatePickerComponent } from '@atomic/atm.date-picker';
+import type * as React from 'react';
 
 export default {
   title: 'Atomic/Atoms/Date Picker',

@@ -1,8 +1,7 @@
-import type * as React from 'react';
-
 import { ActivityIndicator } from '@atomic/atm.activity-indicator';
 import { Flex } from '@atomic/obj.flex';
 import { ScrollListener } from '@atomic/obj.scroll-listener';
+import type * as React from 'react';
 
 export interface InfiniteScrollLoadingRowProps {
   isVisible: boolean;

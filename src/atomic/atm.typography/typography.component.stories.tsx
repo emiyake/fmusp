@@ -1,8 +1,7 @@
-import type * as React from 'react';
+import { Grid, Row } from '@atomic/obj.grid';
 
 import type { Meta } from '@storybook/react';
-
-import { Grid, Row } from '@atomic/obj.grid';
+import type * as React from 'react';
 
 import {
   Body,

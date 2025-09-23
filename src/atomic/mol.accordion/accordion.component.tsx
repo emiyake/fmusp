@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { Button } from '@atomic/atm.button';
 import { Separator } from '@atomic/obj.separator';
+import * as React from 'react';
 
 import { style } from './accordion.component.style';
 

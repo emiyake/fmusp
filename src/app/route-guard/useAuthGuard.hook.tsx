@@ -1,5 +1,5 @@
 import { useSyncTabLocalStorage } from '@app/core/storage';
-import { useUserStore, userStoreInstance } from '@app/stores';
+import { userStoreInstance, useUserStore } from '@app/stores';
 import { isTokenExpired } from '@utils/token.utils';
 
 export const useAuthorized = () => {

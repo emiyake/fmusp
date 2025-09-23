@@ -1,7 +1,6 @@
+import { FaIcon } from '@atomic/atm.fa-icon';
 import type { Meta, StoryFn } from '@storybook/react';
 import * as React from 'react';
-
-import { FaIcon } from '@atomic/atm.fa-icon';
 import { Chip, type ChipProps } from './chip.component';
 import { SelectableChips, type SelectableChipsProps } from './selectable-chips.component';
 

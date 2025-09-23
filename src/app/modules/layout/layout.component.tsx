@@ -1,10 +1,8 @@
-import React from 'react';
-
-import { Outlet, useLocation, useNavigate } from 'react-router';
-
 import { AuthRoutes } from '@app/modules/auth/auth.routes';
 import { userStoreInstance } from '@app/stores/user-store';
 import { Drawer } from '@atomic/atm.drawer';
+import React from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import { style } from './layout.component.style';
 import { layoutStrings } from './layout.strings';
 import { Menu } from './menu.component';
@@ -23,7 +21,7 @@ export const Layout: React.FC<LayoutProps> = ({ links }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Intentional
   React.useEffect(() => {
     const executeScroll = () => {
       mainRef?.current?.scrollIntoView();

@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { Ellipsed } from '@atomic/atm.typography';
+import * as React from 'react';
 import { style } from './file-input.component.style';
 
 export interface FileInputProps {

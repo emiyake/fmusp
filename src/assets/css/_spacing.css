@@ -1,6 +1,7 @@
 @theme {
   --spacing-\*: initial;
-  --spacing-0: 0px;
+  --spacing-0: 0;
+  --spacing-none: 0;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;

@@ -1,48 +1,64 @@
-import type React from 'react';
-import { Suspense } from 'react';
-
-import { Navigate, Route, Routes, useLocation } from 'react-router';
-
 import { GuardElement } from '@app/core/route/guard-element.component';
 import { LazyForgotPasswordPage, LazyLoginPage, LazyRegistrationPage, LazyResetPasswordPage } from '@app/modules/auth';
 import { AuthRoutes } from '@app/modules/auth/auth.routes';
-import { LazyHomePage } from '@app/modules/home';
-import { HomeRoutes } from '@app/modules/home/home.routes';
+import { FormDetailPage, FormListPage } from '@app/modules/form';
+import { FormRoute } from '@app/modules/form/form.routes';
 import { Layout } from '@app/modules/layout/layout.component';
 import type { MenuLink } from '@app/modules/layout/menu.component';
+import { RecursiveSideDrawer } from '@app/modules/layout/recursive-side-drawer.component';
+import { SideDrawerLayout } from '@app/modules/layout/side-drawer.layout';
+import { PatientConsultationPage, PatientRoute } from '@app/modules/patient';
+import { PatientListPage } from '@app/modules/patient/pacient-list.page';
+import { PatientDetailPage } from '@app/modules/patient/patient-detail.page';
 import { useAuthorized } from '@app/route-guard/useAuthGuard.hook';
-import { SampleRoutes, sampleMenuLinks } from '@atomic-samples/sample.routes';
-import { ActivityIndicator } from '@atomic/atm.activity-indicator';
 import { FaIcon } from '@atomic/atm.fa-icon';
+import { SampleRoutes, sampleMenuLinks } from '@atomic-samples/sample.routes';
+import { createBrowserRouter, createRoutesFromElements, Navigate, Route } from 'react-router';
 
-export const links: MenuLink[] = [{ to: HomeRoutes.Base, content: 'Home', icon: <FaIcon.Home /> }];
+export const links: MenuLink[] = [
+  {
+    to: PatientRoute.List,
+    content: 'Pacientes',
+    icon: <FaIcon.Patients />,
+  },
+  {
+    to: FormRoute.List,
+    content: 'Formulários',
+    icon: <FaIcon.Form />,
+  },
+];
 
-export const RootRouter: React.FC = () => {
-  const location = useLocation();
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path={AuthRoutes.Login} element={<LazyLoginPage />} />
+      <Route path={AuthRoutes.Registration} element={<LazyRegistrationPage />} />
+      <Route path={AuthRoutes.ForgotPassword} element={<LazyForgotPasswordPage />} />
+      <Route path={AuthRoutes.ResetPassword} element={<LazyResetPasswordPage />} />
 
-  return (
-    <Suspense fallback={<ActivityIndicator type="circle" />}>
-      <Routes location={location}>
-        <Route path={AuthRoutes.Login} element={<LazyLoginPage />} />
-        <Route path={AuthRoutes.Registration} element={<LazyRegistrationPage />} />
-        <Route path={AuthRoutes.ForgotPassword} element={<LazyForgotPasswordPage />} />
-        <Route path={AuthRoutes.ResetPassword} element={<LazyResetPasswordPage />} />
-
-        <Route
-          path={AuthRoutes.Guard}
-          element={<GuardElement sendPreviousPath redirectPath={AuthRoutes.Login} useGuard={useAuthorized} />}>
-          <Route element={<Layout links={links} />}>
-            <Route path="*" element={<div>Authenticated page</div>} />
+      <Route
+        path={'/'}
+        element={<GuardElement sendPreviousPath redirectPath={AuthRoutes.Login} useGuard={useAuthorized} />}>
+        <Route element={<Layout links={[...links, ...sampleMenuLinks]} />}>
+          <Route index element={<Navigate to={PatientRoute.List} />} />
+          <Route path={FormRoute.List} element={<FormListPage />} />
+          <Route path={FormRoute.Detail} element={<FormDetailPage />} />
+          <Route path={PatientRoute.List} element={<PatientListPage />} />
+          <Route path={PatientRoute.Detail} element={<PatientDetailPage />}>
+            <Route path={PatientRoute.Consultation} element={<SideDrawerLayout />}>
+              <Route
+                index
+                element={
+                  <RecursiveSideDrawer level={1}>
+                    <PatientConsultationPage />
+                  </RecursiveSideDrawer>
+                }
+              />
+            </Route>
           </Route>
-        </Route>
-
-        <Route path={'/'} element={<Layout links={[...links, ...sampleMenuLinks]} />}>
-          <Route index element={<Navigate to={HomeRoutes.Base} />} />
-          <Route path={HomeRoutes.Base} element={<LazyHomePage />} />
-
           {SampleRoutes}
         </Route>
-      </Routes>
-    </Suspense>
-  );
-};
+      </Route>
+    </>,
+  ),
+);

@@ -1,5 +1,5 @@
-import { tv } from 'tailwind-variants';
 import type { VariantProps } from 'tailwind-variants';
+import { tv } from 'tailwind-variants';
 
 export const style = tv({
   base: ['py-xs px-md rounded-full', 'text-fixed-white font-normal font-primary'],

@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { DatePicker } from '@atomic/atm.date-picker';
 import { Flex } from '@atomic/obj.flex';
+import * as React from 'react';
 
 export interface DatePickerRangeProps {
   initialStartDate?: Date;

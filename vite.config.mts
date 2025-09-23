@@ -1,8 +1,7 @@
-import react from '@vitejs/plugin-react';
 import path from 'node:path';
-import { defineConfig } from 'vite';
-import { splitVendorChunkPlugin } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   resolve: {
@@ -12,9 +11,15 @@ export default defineConfig({
       '@atomic': path.resolve(__dirname, 'src/atomic'),
       '@atomic-samples': path.resolve(__dirname, 'src/atomic-samples'),
       '@utils': path.resolve(__dirname, 'src/utils'),
+      '@/components': path.resolve(__dirname, 'src/app/modules/builder/basic-form-builder/components'),
     },
   },
-  plugins: [react(), splitVendorChunkPlugin(), tailwindcss()],
+  define: {
+    // By default, Vite doesn't include shims for NodeJS/
+    // necessary for segment analytics lib to work
+    global: 'globalThis',
+  },
+  plugins: [react(), tailwindcss()],
   build: {
     emptyOutDir: true,
     outDir: 'dist/public',

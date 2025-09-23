@@ -1,6 +1,5 @@
-import { tv } from 'tailwind-variants';
-
 import { field } from '@atomic/obj.form/field.component.styled';
+import { tv } from 'tailwind-variants';
 
 export const style = tv({
   slots: {

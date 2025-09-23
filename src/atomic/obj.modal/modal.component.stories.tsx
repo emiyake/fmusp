@@ -1,10 +1,8 @@
-import * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Button } from '@atomic/atm.button';
 import { Body, H3 } from '@atomic/atm.typography';
 import { Separator } from '@atomic/obj.separator';
+import type { Meta } from '@storybook/react';
+import * as React from 'react';
 
 import { Modal } from './modal.component';
 
@@ -19,7 +17,7 @@ export default {
   },
 } as Meta;
 
-export const ModalStory: React.FC<any> = props => {
+export const ModalStory: React.FC<any> = () => {
   const [open, setOpen] = React.useState(false);
 
   function handleClick(): void {
@@ -28,7 +26,7 @@ export const ModalStory: React.FC<any> = props => {
 
   return (
     <div>
-      <Modal opened={open} small={props.small} onClose={() => setOpen(false)}>
+      <Modal opened={open} onClose={() => setOpen(false)}>
         <H3>Content</H3>
         <Body>Use sidebar knob to toggle to small modal.</Body>
         <Separator />

@@ -8,7 +8,7 @@ export const style = tv({
       "before:content-[''] before:hidden before:w-[67%] before:rotate-[-4.5deg] before:rounded-[100%] before:bg-primary lg:before:block",
       'after:mt-[-20%] after:mb-[-13%] after:ml-[-23%] after:absolute after:left-0 after:top-0 after:bottom-0',
       "after:content-[''] after:hidden after:w-[67%] after:rotate-[-4.5deg] after:rounded-[100%] lg:after:block",
-      'after:bg-fixed-black',
+      'after:bg-secondary',
     ],
     content: 'relative z-10 flex w-full flex-col justify-center items-stretch h-screen',
     robot: 'w-[80%] ml-[10%]',

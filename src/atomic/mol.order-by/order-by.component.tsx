@@ -1,8 +1,6 @@
-import type * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
-
 import { Flex } from '@atomic/obj.flex';
+import type * as React from 'react';
 
 import type { IconType } from 'react-icons';
 import { icon, wrapper } from './order-by.component.style';

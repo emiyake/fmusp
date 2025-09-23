@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import type { FieldStateType } from '@atomic/obj.form';
+import * as React from 'react';
 import { style } from './radio-input.component.style';
 
 interface RadioInputProps extends FieldStateType, React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,7 +10,7 @@ interface RadioInputProps extends FieldStateType, React.InputHTMLAttributes<HTML
 }
 
 export const RadioInput = React.forwardRef<HTMLInputElement, RadioInputProps>((props, ref) => {
-  const { radioId, value, children, invalid, checked, onChange, ...rest } = props;
+  const { radioId, value, children, invalid: _invalid, checked: _checked, onChange, ...rest } = props;
 
   const isControlled = () => value !== undefined;
 

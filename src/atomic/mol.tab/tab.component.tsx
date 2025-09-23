@@ -74,11 +74,7 @@ export const Tab: React.FC<TabProps> & { LinkItem: React.FC<TabItemProps>; BoxIt
       [props.children, activeIndex, handleTap],
     );
 
-    return (
-      <ul role="tablist" className={ulStyle({ full: props.full })}>
-        {filteredChildren}
-      </ul>
-    );
+    return <ul className={ulStyle({ full: props.full })}>{filteredChildren}</ul>;
   };
 
 Tab.LinkItem = LinkTabItem;

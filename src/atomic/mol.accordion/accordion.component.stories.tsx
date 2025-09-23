@@ -1,10 +1,8 @@
-import * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Button } from '@atomic/atm.button';
 import { Body, H3 } from '@atomic/atm.typography';
 import { Separator } from '@atomic/obj.separator';
+import type { Meta } from '@storybook/react';
+import * as React from 'react';
 
 import { Accordion } from './accordion.component';
 
@@ -26,7 +24,7 @@ export const WithHeader: React.FC = () => {
         {Array(5)
           .fill('')
           .map((_, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: Static
             <React.Fragment key={index}>
               <Body>Content</Body>
             </React.Fragment>
@@ -70,7 +68,7 @@ export const WithTrailingTitle: React.FC = () => {
         {Array(5)
           .fill('')
           .map((_, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: Static
             <React.Fragment key={index}>
               <Body>Content</Body>
             </React.Fragment>

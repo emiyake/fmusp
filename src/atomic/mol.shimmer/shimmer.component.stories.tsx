@@ -1,8 +1,7 @@
-import type * as React from 'react';
+import { H2 } from '@atomic/atm.typography';
 
 import type { Meta } from '@storybook/react';
-
-import { H2 } from '@atomic/atm.typography';
+import type * as React from 'react';
 
 import { ShimmerBox } from './shimmer.component';
 

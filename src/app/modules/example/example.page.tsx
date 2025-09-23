@@ -1,15 +1,13 @@
-import type React from 'react';
-
-import { useNavigate } from 'react-router';
-
-import { ExampleSubRoutesRouter } from '@app/modules/example/example-sub-routes/example-sub-routes.router';
 import { WithGuardExampleRoutes } from '@app/modules/example/example.routes';
-import { useUserStore, userStoreInstance } from '@app/stores';
+import { ExampleSubRoutesRouter } from '@app/modules/example/example-sub-routes/example-sub-routes.router';
+import { userStoreInstance, useUserStore } from '@app/stores';
 import { Button } from '@atomic/atm.button';
 import { LinkButton } from '@atomic/atm.button/link-button.component';
 import { H2, H4 } from '@atomic/atm.typography';
 import { Grid, Row } from '@atomic/obj.grid';
 import { Separator } from '@atomic/obj.separator';
+import type React from 'react';
+import { useNavigate } from 'react-router';
 
 import { AuthRoutes } from '../auth/auth.routes';
 

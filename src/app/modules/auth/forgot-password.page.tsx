@@ -1,10 +1,7 @@
-import type React from 'react';
+import { Button, Form, FormField, Separator, TextInput } from '@atomic';
 
-import { TextInput } from '@atomic';
-import { Button } from '@atomic/atm.button';
-import { Form, FormField } from '@atomic/obj.form';
 import * as Validators from '@atomic/obj.form/validators';
-import { Separator } from '@atomic/obj.separator';
+import type React from 'react';
 import { useLocation } from 'react-router';
 import { AuthPageWrapper } from './auth-page-wrapper.component';
 

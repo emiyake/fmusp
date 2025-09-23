@@ -1,7 +1,6 @@
-import type * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { Body } from '@atomic/atm.typography';
+import type * as React from 'react';
 
 import { type StyleVariants, style } from './stepper-cell.component.style';
 

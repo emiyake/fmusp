@@ -1,10 +1,8 @@
-import React from 'react';
-
-import { NavLink } from 'react-router';
-
 import { useThemeStore } from '@app/stores/theme-store';
 import { Divider, InputLabel, SwitchInput } from '@atomic';
 import { Flex } from '@atomic/obj.flex';
+import React from 'react';
+import { NavLink } from 'react-router';
 import { layoutStrings } from './layout.strings';
 import { style, submenu } from './menu.component.style';
 

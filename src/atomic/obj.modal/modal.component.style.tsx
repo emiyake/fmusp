@@ -7,7 +7,7 @@ export const style = tv({
     close: 'absolute top-0 right-0 p-md text-neutral-strong cursor-pointer',
     box: [
       'fixed top-[80px] left-[50%] translate-x-[-50%]  translate-y-[-50%]', // positioning
-      'p-md w-[90%] m-w-[90%] m-h-[80%] overflow-auto overscroll-contain', // size
+      'p-md w-[90%] max-w-[90%] max-h-[90%] overflow-auto overscroll-contain', // size
       'bg-background rounded-lg opacity-0', // styling
       'transition-all', //animation
     ],

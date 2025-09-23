@@ -1,8 +1,6 @@
-import type * as React from 'react';
-
-import { type StyleVariants, style } from './activity-indicator.component.style';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
+import type * as React from 'react';
+import { type StyleVariants, style } from './activity-indicator.component.style';
 
 export const ActivityIndicatorTypes = {
   spinner: FaIcon.LoaderSpinner,

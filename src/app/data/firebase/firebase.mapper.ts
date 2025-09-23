@@ -3,7 +3,6 @@ export const formatName = (text: string, maxLength: number): string =>
     .replace(/-/g, '_')
     .replace(/\s/g, '_')
     .normalize('NFD')
-    // biome-ignore lint/suspicious/noMisleadingCharacterClass: <explanation>
     .replace(/[\u0300-\u036f]/g, '')
     .slice(0, maxLength);
 

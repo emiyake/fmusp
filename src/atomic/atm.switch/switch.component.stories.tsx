@@ -1,8 +1,7 @@
-import type * as React from 'react';
+import { Form, FormField } from '@atomic/obj.form';
 
 import type { Meta } from '@storybook/react';
-
-import { Form, FormField } from '@atomic/obj.form';
+import type * as React from 'react';
 import { SwitchInput as SwitchComponent, type SwitchProps } from './switch-input.component';
 
 export default {

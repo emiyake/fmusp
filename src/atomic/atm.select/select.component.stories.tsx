@@ -1,11 +1,8 @@
-import type * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Body, H3 } from '@atomic/atm.typography';
-import { Separator } from '@atomic/obj.separator';
-
 import { Form, FormField } from '@atomic/obj.form';
+import { Separator } from '@atomic/obj.separator';
+import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 import { SelectInput } from './select-input.component';
 
 interface SelectFieldProps {
@@ -68,7 +65,7 @@ export const Controlled: React.FC<SelectFieldProps> = () => {
       <FormField name="select" label="Select field with FormField wrapper" defaultValue="BA">
         <SelectInput>
           {options.map((option, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: Static list
             <Option key={index} {...option} />
           ))}
         </SelectInput>

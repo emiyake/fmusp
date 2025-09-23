@@ -13,6 +13,7 @@ export const DragNDropFile: React.FC<DragNDropFileProps> = React.forwardRef(
     const [dragging, setDragging] = React.useState<boolean>(false);
     const dropZone = React.useRef<HTMLDivElement>(null);
     const [dragCounter, setDragCounter] = React.useState<number>(0);
+    const componentId = React.useId();
 
     const handleDrag = React.useCallback((event: DragEvent) => {
       event.preventDefault();
@@ -72,10 +73,10 @@ export const DragNDropFile: React.FC<DragNDropFileProps> = React.forwardRef(
     }, [dragCounter, isMultipleFiles, onChange, handleDrag, handleDragIn]);
 
     return (
-      <div className={style().wrapper()} ref={dropZone} id="dragAndDrop">
+      <div className={style().wrapper()} ref={dropZone} id={componentId}>
         {dragging && (
           <div className={style().overlay()}>
-            <label className={style().message()} htmlFor="dragAndDrop">
+            <label className={style().message()} htmlFor={componentId}>
               {dropMessage}
             </label>
           </div>

@@ -1,7 +1,6 @@
-import { tv } from 'tailwind-variants';
-
 import { field } from '@atomic/obj.form/field.component.styled';
 import { focusStyles } from '@atomic/obj.mixin';
+import { tv } from 'tailwind-variants';
 
 const { border, content } = field();
 

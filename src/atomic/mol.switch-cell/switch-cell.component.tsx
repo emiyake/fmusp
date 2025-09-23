@@ -1,8 +1,7 @@
-import type * as React from 'react';
-
 import { SwitchInput } from '@atomic/atm.switch';
 import { H3 } from '@atomic/atm.typography';
 import { Flex } from '@atomic/obj.flex';
+import type * as React from 'react';
 
 export interface SwitchCellProps {
   title: string;

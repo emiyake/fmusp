@@ -1,8 +1,6 @@
-import * as React from 'react';
-
-import { InView } from 'react-intersection-observer';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
+import * as React from 'react';
+import { InView } from 'react-intersection-observer';
 
 import { style } from './lazy-load-image.component.style';
 

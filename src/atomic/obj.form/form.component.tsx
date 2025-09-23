@@ -3,7 +3,7 @@ import { type FieldPath, type FieldValues, FormProvider, useForm } from 'react-h
 
 interface FormProps<T extends FieldValues> {
   onSubmit: (data: T) => void;
-  children: React.ReactElement<{ name: FieldPath<T> }>[];
+  children: React.ReactElement<{ name: FieldPath<T> }> | React.ReactElement<{ name: FieldPath<T> }>[];
 }
 
 export const Form = <T extends FieldValues>(props: FormProps<T>) => {

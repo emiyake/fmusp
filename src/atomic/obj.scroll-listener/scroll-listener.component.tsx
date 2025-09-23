@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 const hasDocument = () => typeof document !== 'undefined';
 const hasWindow = () => typeof window !== 'undefined';
 

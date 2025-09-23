@@ -12,7 +12,7 @@ export const CarouselPager: React.FC<CarouselPagerProps> = props => {
     <div className="text-center">
       {new Array(props.total).fill(undefined).map((_i, index: number) => (
         <span
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+          // biome-ignore lint/suspicious/noArrayIndexKey: Intentional
           key={`name${index}`}
           className={pager({ active: index === props.current })}
         />

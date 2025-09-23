@@ -1,11 +1,8 @@
-import type * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Body, H2 } from '@atomic/atm.typography';
-import { Separator } from '@atomic/obj.separator';
-
 import { Form, FormField } from '@atomic/obj.form';
+import { Separator } from '@atomic/obj.separator';
+import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 import { CheckboxInput } from './checkbox-input.component';
 
 const TOGGLE_OPTIONS = ['2', '6', '7', '8'];

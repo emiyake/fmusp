@@ -1,8 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
 import { Badge } from '@atomic/atm.badge';
 import { Body } from '@atomic/atm.typography';
 import { Separator } from '@atomic/obj.separator';
+import type { Meta, StoryObj } from '@storybook/react';
 import { BadgeRound } from './badge-round.component';
 
 const meta: Meta<typeof Badge> = {

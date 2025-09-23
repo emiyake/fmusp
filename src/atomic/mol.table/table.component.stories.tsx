@@ -1,10 +1,9 @@
-import type * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Body, H2, H4 } from '@atomic/atm.typography';
 
-import { TBody, TD, TH, THead, TR, Table } from '../mol.table';
+import type { Meta } from '@storybook/react';
+import type * as React from 'react';
+
+import { Table, TBody, TD, TH, THead, TR } from '../mol.table';
 
 export default {
   title: 'Atomic/Molecules/Table',

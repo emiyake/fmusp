@@ -1,8 +1,7 @@
-import type * as React from 'react';
-
 import { LazyLoadImage } from '@atomic/atm.lazy-load-image';
 import { Body, H3 } from '@atomic/atm.typography';
 import { Col, Grid } from '@atomic/obj.grid';
+import type * as React from 'react';
 
 export interface ScreenPlaceholderProps {
   src: string;
