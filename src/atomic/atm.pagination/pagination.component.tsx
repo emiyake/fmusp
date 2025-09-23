@@ -25,7 +25,7 @@ const PaginationItem: React.FC<PageItemProps> = props => {
   const { active } = props;
 
   const handleClick = () => {
-    props.onClick(Number.parseInt(props.page));
+    props.onClick(Number.parseInt(props.page, 10));
   };
   return (
     <button onClick={handleClick} className={link({ active })} type="button" aria-current={active ? 'page' : undefined}>
@@ -93,7 +93,7 @@ export const Pagination: React.FC<PaginationProps> = props => {
     <nav className="flex justify-center">
       <ul className={ul()} aria-label={strings.title}>
         {constructedPaginationArray.map((val: string, index: number) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+          // biome-ignore lint/suspicious/noArrayIndexKey: Intentionally using array index as key
           <li key={`name${index}`} className={li()}>
             <PaginationItem active={val === props.current.toString()} onClick={props.onPageChange} page={val} />
           </li>

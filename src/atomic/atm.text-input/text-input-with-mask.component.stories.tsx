@@ -1,9 +1,8 @@
-import type * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { TextFieldMasks, TextInput } from '@atomic/atm.text-input';
 import { H3 } from '@atomic/atm.typography';
 import { Form, FormField } from '@atomic/obj.form';
+import type * as React from 'react';
 
 export default {
   title: 'Atomic/Atoms/TextInput',

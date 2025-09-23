@@ -1,6 +1,5 @@
-import type * as React from 'react';
-
 import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 
 import { Divider as DividerComponent } from './divider.component.style';
 

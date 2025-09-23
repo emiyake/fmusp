@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
+import * as React from 'react';
 
 import { type StyleVariants, style } from './flash-message.component.style';
 
@@ -60,7 +59,7 @@ export class FlashMessage extends React.PureComponent<FlashMessageProps, FlashMe
   }
 
   render() {
-    const { children, dismissible, type, autoClose, ...other } = this.props;
+    const { children, dismissible, type, autoClose: _autoclose, ...other } = this.props;
     const Icon = FlashIconTypes[type ?? 'info'];
     return this.state.remove ? null : (
       <div className={style().fade({ visible: !this.state.hidden })}>
@@ -101,6 +100,8 @@ export class FlashMessage extends React.PureComponent<FlashMessageProps, FlashMe
   };
 
   private readonly clearTimeoutList = () => {
-    this.timeoutList.forEach((element: ReturnType<typeof setTimeout>) => clearTimeout(element));
+    this.timeoutList.forEach((element: ReturnType<typeof setTimeout>) => {
+      clearTimeout(element);
+    });
   };
 }

@@ -1,5 +1,4 @@
-import { Navigate, Outlet } from 'react-router';
-import { useLocation } from 'react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
 
 export type RouteGuard = () => boolean;
 

@@ -1,5 +1,5 @@
 import { focusStyles } from '@atomic/obj.mixin';
-import { type VariantProps, tv } from 'tailwind-variants';
+import { tv, type VariantProps } from 'tailwind-variants';
 
 export const style = tv({
   base: [
@@ -21,7 +21,8 @@ export const style = tv({
       neutral: 'border-neutral bg-neutral text-fixed-white',
     },
     size: {
-      sm: 'h-[36px]',
+      xs: 'h-[24px] px-xs text-xs',
+      sm: 'h-[32px] px-sm',
       md: 'h-[44px]',
       lg: 'h-[52px]',
     },
@@ -32,7 +33,7 @@ export const style = tv({
       true: 'w-full',
     },
     link: {
-      true: 'bg-fixed-transparent border-0 shadow-none px-0',
+      true: 'bg-fixed-transparent border-0 shadow-none !px-xs',
     },
     disabled: {
       true: 'opacity-70 pointer-events-none', // for link buttons only
@@ -43,6 +44,7 @@ export const style = tv({
     size: 'md',
   },
   compoundVariants: [
+    { variant: 'neutral', link: true, class: 'hover:bg-neutral-xsoft' },
     {
       variant: 'primary',
       outlined: true,

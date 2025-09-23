@@ -1,6 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
-  "organizeImports": { "enabled": true },
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -18,19 +24,26 @@
         "useHookAtTopLevel": "error"
       },
       "nursery": {
-        "noNestedTernary": "error",
         "useSortedClasses": "warn"
       },
       "security": {},
       "style": {
         "noImplicitBoolean": "off",
         "useNodejsImportProtocol": "off",
-        "noUselessElse": "warn"
+        "noUselessElse": "warn",
+        "noNestedTernary": "error"
       },
       "suspicious": {
-        "noConsoleLog": "warn",
         "noExplicitAny": "off",
-        "useAwait": "error"
+        "useAwait": "error",
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": [
+              "log"
+            ]
+          }
+        }
       }
     }
   },
@@ -53,10 +66,16 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineWidth": 120,
-    "ignore": [],
+    "includes": [
+      "**"
+    ],
     "lineEnding": "lf"
   },
   "files": {
-    "ignore": ["./src/app/data/graphql/schema.json", "./src/assets/css/_intro.css", "./src/assets/css/_animation.css"]
+    "includes": [
+      "**",
+      "!src/app/data/graphql/schema.json",
+      "!src/**/*.css"
+    ]
   }
 }

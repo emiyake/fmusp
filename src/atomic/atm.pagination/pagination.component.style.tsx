@@ -2,17 +2,17 @@ import { tv } from 'tailwind-variants';
 
 export const style = tv({
   slots: {
-    ul: 'flex space-x-1',
+    ul: 'flex space-x-xs',
     li: 'flex-1 sm:flex-initial ',
-    separator: 'p-4 border-0 text-neutral inline-block',
+    separator: 'p-4 text-neutral inline-block',
   },
 });
 
 export const link = tv({
-  base: 'py-sm px-md border text-neutral font-primary rounded-md hover:bg-neutral-xsoft',
+  base: 'py-sm px-md  text-neutral font-primary text-sm rounded-lg hover:bg-neutral-soft',
   variants: {
     active: {
-      true: 'bg-primary text-fixed-white hover:bg-primary/70',
+      true: 'bg-neutral-xxsoft border border-neutral-soft  hover:bg-neutral-xxsoft',
     },
   },
 });

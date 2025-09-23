@@ -13,11 +13,12 @@ interface CardProps {
   noShadow?: boolean;
   noBorder?: boolean;
   double?: boolean;
+  classNameFront?: string;
 }
 
-const _Card: CardType<CardProps> = ({ className, children, noShadow, double, noBorder }) => (
+const _Card: CardType<CardProps> = ({ className, classNameFront, children, noShadow, double, noBorder }) => (
   <div className={card().back({ className, double })}>
-    <div className={card().front({ noShadow, noBorder })}>{children}</div>
+    <div className={card().front({ className: classNameFront, noShadow, noBorder })}>{children}</div>
   </div>
 );
 

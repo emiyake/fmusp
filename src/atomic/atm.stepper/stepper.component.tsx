@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { type StepperCellProps, _StepperCell } from './stepper-cell.component';
+import { _StepperCell, type StepperCellProps } from './stepper-cell.component';
 import type { StyleVariants } from './stepper-cell.component.style';
 
 export interface StepperProps {

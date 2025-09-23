@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import type { FieldStateType } from '@atomic/obj.form';
+import * as React from 'react';
 import { type StyleVariants, style } from './checkbox-input.component.style';
 
 export interface CheckboxInputProps extends FieldStateType, StyleVariants, React.InputHTMLAttributes<HTMLInputElement> {
@@ -14,7 +13,7 @@ export interface CheckboxInputProps extends FieldStateType, StyleVariants, React
 }
 
 export const CheckboxInput = React.forwardRef<HTMLInputElement, CheckboxInputProps>((props, ref) => {
-  const { children, checkboxId, value, onChange, invalid, ...rest } = props;
+  const { children, checkboxId, value, onChange, invalid: _invalid, checked, ...rest } = props;
 
   const isControlled = () => value !== undefined;
 
@@ -35,10 +34,10 @@ export const CheckboxInput = React.forwardRef<HTMLInputElement, CheckboxInputPro
       <div className="relative">
         <input
           type="checkbox"
-          checked={isControlled() ? value?.includes(checkboxId) : undefined}
           className={style().bullet()}
           {...rest}
-          value={checkboxId}
+          checked={isControlled() ? value?.includes(checkboxId) : checked}
+          value={isControlled() ? checkboxId : value}
           onChange={handleChange}
           ref={ref}
         />

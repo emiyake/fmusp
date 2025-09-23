@@ -4,6 +4,9 @@
 @import "tailwindcss";
 @import "tailwindcss-animated";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 @import "./_constants.css" layer(base);
 @import "./_preflight.css" layer(base);
 
@@ -16,3 +19,5 @@
 @import "./_background-image.css";
 
 @import "react-datepicker/dist/react-datepicker.css" layer(components);
+@import "survey-core/survey-core.css" layer(components);
+@import "survey-creator-core/survey-creator-core.css" layer(components);

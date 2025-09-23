@@ -1,7 +1,6 @@
-import type * as React from 'react';
-
 import { Form, FormField } from '@atomic/obj.form';
 import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 import { FileInput, type FileInputProps } from './file-input.component';
 
 export default {

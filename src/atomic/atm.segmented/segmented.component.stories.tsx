@@ -1,6 +1,5 @@
-import type * as React from 'react';
-
 import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 
 import { Segmented as SegmentedComponent } from './segmented.component';
 

@@ -10,8 +10,8 @@ import { SelectInput } from '@atomic/atm.select/select-input.component';
 import { StepperInput } from '@atomic/atm.stepper-input/stepper-input.component';
 import { SwitchInput } from '@atomic/atm.switch/switch-input.component';
 import { TextAreaInput } from '@atomic/atm.text-input/text-area-input.component';
-import { TextFieldMasks } from '@atomic/atm.text-input/text-input-masks';
 import { TextInput } from '@atomic/atm.text-input/text-input.component';
+import { TextFieldMasks } from '@atomic/atm.text-input/text-input-masks';
 import { Body, BodySecondary, H1, H3, H4, InputLabel } from '@atomic/atm.typography';
 import { DragNDropFile } from '@atomic/mol.drag-n-drop-file/drag-n-drop-file.component';
 import {
@@ -177,7 +177,6 @@ interface RadioFormValues {
 
 function RadioExamplesComponent() {
   const handleSubmit: SubmitHandler<RadioFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -215,7 +214,6 @@ interface CheckboxFormValues {
 
 function CheckboxExamplesComponent() {
   const handleSubmit: SubmitHandler<CheckboxFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -251,7 +249,6 @@ interface SwitchFormValues {
 
 function SwitchExamplesComponent() {
   const handleSubmit: SubmitHandler<SwitchFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -274,7 +271,6 @@ interface StepperFormValues {
 
 function StepperExamplesComponent() {
   const handleSubmit: SubmitHandler<StepperFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -303,7 +299,6 @@ interface FileFormValues {
 
 function FileExamplesComponent() {
   const handleSubmit: SubmitHandler<FileFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -334,7 +329,6 @@ interface SelectFormValues {
 
 function SelectExamplesComponent() {
   const handleSubmit: SubmitHandler<SelectFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -373,7 +367,6 @@ interface ValidatorsFormValues {
 
 function ValidatorsExamplesComponent() {
   const handleSubmit: SubmitHandler<ValidatorsFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -416,7 +409,6 @@ interface MaskedFieldFormValues {
 
 function MaskedFieldExamplesComponent() {
   const handleSubmit: SubmitHandler<MaskedFieldFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -454,7 +446,6 @@ interface TextFormValues {
 
 function TextExamplesComponent() {
   const handleSubmit: SubmitHandler<TextFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -497,7 +488,6 @@ interface PasswordFormValues {
 
 function PasswordExamplesComponent() {
   const handleSubmit: SubmitHandler<PasswordFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 
@@ -517,7 +507,9 @@ function PasswordExamplesComponent() {
 
 const ConfirmPasswordComponent = <T extends FieldValuesType>({
   passwordFieldName,
-}: { passwordFieldName: PathType<T> }) => {
+}: {
+  passwordFieldName: PathType<T>;
+}) => {
   const passwordValue = useFormFieldWatch<T>(passwordFieldName);
 
   return (
@@ -539,7 +531,6 @@ interface DynamicFormValues {
 
 const DynamicFormExamplesComponent: React.FC = () => {
   const handleSubmit: SubmitHandler<DynamicFormValues> = data => {
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log(data);
   };
 

@@ -9,9 +9,8 @@ export * from './flash.page';
 export * from './forms.page';
 export * from './icons.page';
 export * from './loading.page';
+export * from './sample-icons.component';
 export * from './stepper.page';
 export * from './tables.page';
 export * from './tabs.page';
 export * from './typography.page';
-
-export * from './sample-icons.component';

@@ -1,8 +1,7 @@
-import type React from 'react';
+import { Button } from '@atomic/atm.button';
 
 import type { Meta } from '@storybook/react';
-
-import { Button } from '@atomic/atm.button';
+import type React from 'react';
 
 import { ScreenPlaceholder as ScreenPlaceholderComponent } from './screen-placeholder.component';
 

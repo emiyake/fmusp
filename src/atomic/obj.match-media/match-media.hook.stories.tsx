@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type * as React from 'react';
-import { type MatchMedia, breakpoints, useBreakpoint } from './match-media.hook';
+import { breakpoints, type MatchMedia, useBreakpoint } from './match-media.hook';
 import { style } from './match-media.hook.style';
 
 interface BreakpointDisplayProps {

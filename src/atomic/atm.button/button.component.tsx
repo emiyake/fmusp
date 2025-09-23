@@ -1,6 +1,5 @@
-import type React from 'react';
-
 import { ActivityIndicator } from '@atomic/atm.activity-indicator';
+import type React from 'react';
 
 import { type StyleVariants, style } from './button.component.style';
 
@@ -11,6 +10,7 @@ export interface ButtonProps extends StyleVariants {
   loading?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  ref?: React.RefObject<HTMLButtonElement>;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,10 +20,12 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   loading,
   type,
+  ref,
   ...rest
-}: ButtonProps) => {
+}) => {
   return (
     <button
+      ref={ref}
       className={style({ ...rest, class: className })}
       onClick={onClick}
       disabled={disabled || loading}
@@ -32,3 +34,5 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
+
+Button.displayName = 'Button';

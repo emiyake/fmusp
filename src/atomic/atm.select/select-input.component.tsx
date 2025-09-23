@@ -1,13 +1,12 @@
-import * as React from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import type { FieldStateType } from '@atomic/obj.form/form.model';
+import * as React from 'react';
 import { style } from './select-input.component.style';
 
 export interface SelectProps extends FieldStateType, React.InputHTMLAttributes<HTMLSelectElement> {}
 
 export const SelectInput = React.forwardRef((props: SelectProps, ref: React.ForwardedRef<HTMLSelectElement>) => {
-  const { type, invalid, className, children, ...other } = props;
+  const { type: _type, invalid, className, children, ...other } = props;
 
   return (
     <div

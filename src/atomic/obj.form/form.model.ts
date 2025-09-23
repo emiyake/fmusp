@@ -6,8 +6,8 @@ import type {
   FieldValues,
   Path,
   PathValue,
-  SubmitHandler as RHFSubmitHandler,
   RegisterOptions,
+  SubmitHandler as RHFSubmitHandler,
   Validate,
 } from 'react-hook-form';
 

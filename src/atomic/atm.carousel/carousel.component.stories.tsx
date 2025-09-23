@@ -1,8 +1,7 @@
-import * as React from 'react';
+import { Carousel as CarouselComponent, CarouselPager, type CarouselProps } from '@atomic/atm.carousel';
 
 import type { Meta } from '@storybook/react';
-
-import { Carousel as CarouselComponent, CarouselPager, type CarouselProps } from '@atomic/atm.carousel';
+import * as React from 'react';
 
 export default {
   title: 'Atomic/Atoms/Carousel',

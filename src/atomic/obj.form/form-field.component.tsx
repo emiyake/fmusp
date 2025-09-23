@@ -1,12 +1,14 @@
 import { InputLabel, InputLegend } from '@atomic/atm.typography';
 import * as React from 'react';
 import { type FieldValues, type Path, useController, useFormContext } from 'react-hook-form';
-import { FormFieldCaption } from './form-field-caption.component';
+import { tv } from 'tailwind-variants';
 import type { InputType } from './form.model';
 import { getRulesFromValidators } from './form.utils';
+import { FormFieldCaption } from './form-field-caption.component';
 
 interface FormFieldProps<T extends FieldValues> extends InputType<T> {
   label?: string;
+  className?: string;
 }
 
 const DefaultValues: Record<string, any> = {
@@ -34,8 +36,8 @@ type InputElementProps = {
 export function FormField<TFieldValues extends FieldValues>(
   props: React.PropsWithChildren<FormFieldProps<TFieldValues>>,
 ) {
-  const { validators = [], disabled, name, defaultValue: componentDefaultValue } = props;
-  const id = React.useId();
+  const { validators = [], disabled, name, defaultValue: componentDefaultValue, className } = props;
+  const _id = React.useId();
 
   const formContext = useFormContext();
 
@@ -65,8 +67,10 @@ export function FormField<TFieldValues extends FieldValues>(
 
   const FieldElement = isFieldset ? 'fieldset' : 'div';
 
+  const id = React.useId();
+
   return (
-    <FieldElement id="1" className="[&+&]:mt-md">
+    <FieldElement id={id} className={formField({ className })}>
       {!!props.label &&
         (isFieldset ? (
           <InputLegend hasError={!!fieldState.error} isRequired={isRequired}>
@@ -100,6 +104,7 @@ export function FormField<TFieldValues extends FieldValues>(
         }
 
         if (process.env.NODE_ENV !== 'production') {
+          // biome-ignore lint/suspicious/noConsole: Intentional
           console.warn(
             'FormField component should have children components with displayName ending with "Input" to receive field props',
           );
@@ -112,3 +117,7 @@ export function FormField<TFieldValues extends FieldValues>(
     </FieldElement>
   );
 }
+
+const formField = tv({
+  base: '[&+&]:mt-md',
+});

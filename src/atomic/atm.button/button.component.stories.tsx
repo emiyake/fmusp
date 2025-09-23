@@ -1,15 +1,13 @@
-import type * as React from 'react';
-
-import type { Meta, StoryObj } from '@storybook/react';
-import { BrowserRouter, Route, Routes } from 'react-router';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { Body } from '@atomic/atm.typography';
 import { Separator } from '@atomic/obj.separator';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react';
+import type * as React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import { fn } from 'storybook/test';
 
-import { Button, type ButtonProps } from './button.component';
-import { LinkButton } from './link-button.component';
+import { Button } from './button.component';
+import { LinkButton, type LinkButtonProps } from './link-button.component';
 
 const meta: Meta<typeof Button> = {
   title: 'Atomic/Atoms/Button',
@@ -50,13 +48,13 @@ export const ButtonWithLabel: Story = {
   ),
 };
 
-export const LinkButtons: React.FC<ButtonProps> = props => (
+export const LinkButtons: React.FC<LinkButtonProps> = props => (
   <BrowserRouter>
     <Routes>
       <Route
         path="*"
         element={
-          <LinkButton variant="primary" to="route" {...props} className="mt-xs mr-xs">
+          <LinkButton variant="primary" {...props} to="route" className="mt-xs mr-xs">
             <FaIcon.Home />
             Router link
           </LinkButton>

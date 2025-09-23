@@ -1,4 +1,4 @@
-export * from './store';
+export * from './base-store';
 export * from './create-store';
 export * from './local-store';
-export * from './base-store';
+export * from './store';

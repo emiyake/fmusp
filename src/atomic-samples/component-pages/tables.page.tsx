@@ -3,7 +3,7 @@ import { Divider } from '@atomic/atm.divider';
 import { Pagination } from '@atomic/atm.pagination';
 import { H1, H3 } from '@atomic/atm.typography';
 import { OrderBy } from '@atomic/mol.order-by';
-import { TBody, TD, TH, THead, TR, Table } from '@atomic/mol.table';
+import { Table, TBody, TD, TH, THead, TR } from '@atomic/mol.table';
 import { Col, Grid, Row } from '@atomic/obj.grid';
 import React from 'react';
 

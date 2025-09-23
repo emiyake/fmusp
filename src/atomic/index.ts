@@ -1,6 +1,7 @@
 export * from './atm.activity-indicator';
 export * from './atm.badge';
 export * from './atm.button';
+export * from './atm.card';
 export * from './atm.carousel';
 export * from './atm.checkbox';
 export * from './atm.date-picker';
@@ -23,9 +24,13 @@ export * from './atm.typography';
 
 export * from './mol.chips';
 export * from './mol.loading';
+export * from './mol.shimmer';
 export * from './mol.tab';
+export * from './mol.table';
 
-export * from './obj.separator';
+export * from './obj.flex';
 export * from './obj.form';
 export * from './obj.grid';
+export * from './obj.loading-state';
 export * from './obj.mixin';
+export * from './obj.separator';

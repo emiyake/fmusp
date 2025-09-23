@@ -6,7 +6,7 @@ interface SyncTabLocalStorageParams {
 }
 
 export const useSyncTabLocalStorage = ({ storageKey, onChange }: SyncTabLocalStorageParams): void => {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Intentional
   useEffect(() => {
     // tab storage sync
     function handleStorageEvent(event: StorageEvent) {

@@ -71,9 +71,7 @@ export const useDialog = () => {
 };
 
 export const DialogPolyfillWrapper: React.FC<React.PropsWithChildren<DialogWrapperProps>> = props => {
-  return props.isPolyfill ? (
-    createPortal(props.children, document?.getElementById('dialog-polyfill') as Element)
-  ) : (
-    <>{props.children}</>
-  );
+  return props.isPolyfill
+    ? createPortal(props.children, document?.getElementById('dialog-polyfill') as Element)
+    : props.children;
 };

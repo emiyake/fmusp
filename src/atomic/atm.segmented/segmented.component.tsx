@@ -5,13 +5,15 @@ import { style } from './segmented.component.style';
 interface SegmentedItemProps {
   children?: React.ReactNode;
   selected?: boolean;
+  disabled?: boolean;
 }
-const SegmentedItem: React.FC<SegmentedItemProps> = ({ selected, ...props }) => (
-  <button className={style().button({ selected })} aria-pressed={selected} {...props} />
+const SegmentedItem: React.FC<SegmentedItemProps> = ({ selected, disabled, ...props }) => (
+  <button className={style().button({ selected, disabled })} aria-pressed={selected} disabled={disabled} {...props} />
 );
 export interface SegmentedProps {
   onChange?: (index: number) => any;
   children?: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'neutral';
 }
 
 export interface SegmentedState {
@@ -42,7 +44,7 @@ const _Segmented: React.FC<SegmentedProps> = props => {
 
   return (
     <span
-      className={style().wrapper()}
+      className={style().wrapper({ variant: props.variant ?? 'primary' })}
       style={
         {
           '--number-of-items': numberOfChildren.toString(),

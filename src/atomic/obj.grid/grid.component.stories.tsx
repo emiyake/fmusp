@@ -1,9 +1,7 @@
-import type * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { H2 } from '@atomic/atm.typography';
 import { Col, Row } from '@atomic/obj.grid';
+import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 
 export default {
   title: 'Atomic/Objects/Grid',

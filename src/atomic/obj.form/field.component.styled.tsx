@@ -13,7 +13,6 @@ export const field = tv({
       'hover:ring-2 hover:ring-primary/50',
       'focus:border-primary/50 focus:outline-hidden',
       'disabled:ring-0',
-      'dark:border-neutral-soft/40', // dark mode
     ],
     content: [
       'text-neutral-strong, disabled:text-neutral placeholder:text-neutral transition-all appearance-none bg-neutral-xxsoft px-sm h-[44px] w-full font-primary text-sm',

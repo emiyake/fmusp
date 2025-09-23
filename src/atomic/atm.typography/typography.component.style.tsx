@@ -1,12 +1,12 @@
 import type React from 'react';
 
-import { type VariantProps, tv } from 'tailwind-variants';
+import { tv, type VariantProps } from 'tailwind-variants';
 
 export const typography = tv({
   slots: {
     base: 'font-primary text-base',
     display: 'text-4xl font-secondary mt-md font-medium',
-    h1: 'text-xl text-neutral-xstrong my-md font-primary font-medium',
+    h1: 'text-2xl text-neutral-xstrong my-md font-secondary font-medium',
     h2: 'text-lg font-primary font-medium text-neutral-xstrong mb-sm mt-md ',
     h3: 'text-base font-primary font-medium mb-sm',
     h4: 'text-sm font-primary font-medium',
@@ -35,10 +35,11 @@ export const BodySecondary: Typography = ({ className, children }) => (
 );
 
 export const input = tv({
-  base: ['text-sm text-neutral-xstrong'],
+  base: ['text-sm text-neutral-strong'],
   variants: {
     hasError: { true: 'text-feedback-danger' },
     type: {
+      dt: 'block font-medium text-neutral-xxstrong',
       label: 'block font-medium mb-xs',
       value: 'font-normal',
       caption: 'mt-xs block text-xs font-medium ',
@@ -55,7 +56,7 @@ interface InputLabelProps extends InputVariants {
 export const InputLabel: Typography<InputLabelProps> = ({ htmlFor, className, hasError, isRequired, children }) => (
   <label className={input({ type: 'label', hasError, className })} htmlFor={htmlFor}>
     {children}
-    {!!isRequired && ' *'}
+    {!!isRequired && <span className="text-feedback-danger"> * </span>}
   </label>
 );
 
@@ -84,7 +85,7 @@ export const ProductPrice: Typography = ({ className, children }) => (
 );
 
 export const DT: Typography = ({ className, children }) => (
-  <dt className={input({ type: 'label', hasError: false, className })}>{children}</dt>
+  <dt className={input({ type: 'dt', hasError: false, className })}>{children}</dt>
 );
 
 export const DD: Typography = ({ className, children }) => (
@@ -99,8 +100,8 @@ export const DD: Typography = ({ className, children }) => (
 );
 
 const dl = tv({
-  base: 'gap-xs my-sm flex flex-row',
-  variants: { vertical: { true: 'flex-col' } },
+  base: 'my-sm flex gap-xs flex-row',
+  variants: { vertical: { true: 'flex-col !gap-0 [&+&]:mt-md' } },
 });
 type DlVariants = VariantProps<typeof dl>;
 

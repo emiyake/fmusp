@@ -1,10 +1,7 @@
-import type * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import { Button } from '@atomic/atm.button';
-
 import { Form, FormField } from '@atomic/obj.form';
+import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 import { DragNDropFile as DragNDropFileComponent, type DragNDropFileProps } from './drag-n-drop-file.component';
 
 export default {

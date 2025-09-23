@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { BodySecondary, InputValue } from '@atomic/atm.typography';
 import { Flex } from '@atomic/obj.flex';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { stepperInputStrings } from './stepper-input.component.strings';
 import { style } from './stepper-input.component.style';
 

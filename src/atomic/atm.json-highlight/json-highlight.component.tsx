@@ -6,7 +6,7 @@ const syntaxHighlight = (json: any) => {
   const newJson = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
   return newJson.replace(
-    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
     (match: string) => {
       let cls = 'number';
       if (/^"/.test(match)) {
@@ -33,7 +33,7 @@ export const JsonHightlight: React.FC<JsonHightlightProps> = props => {
   return (
     <pre
       className={style()}
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: Intentional
       dangerouslySetInnerHTML={{
         __html: syntaxHighlight(JSON.stringify(props.json, undefined, 4)),
       }}

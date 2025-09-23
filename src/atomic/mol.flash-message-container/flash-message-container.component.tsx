@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-
-import { createPortal } from 'react-dom';
-
 import { FlashMessage, type FlashMessageType } from '@atomic/mol.flash-message/flash-message.component';
 import { Grid } from '@atomic/obj.grid';
+import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { style } from './flash-message-container.component.style';
 

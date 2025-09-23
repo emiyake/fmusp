@@ -10,13 +10,13 @@ export const getRulesFromValidators = <T extends FieldValues>(
         const validateKey = `validate_${index}`;
 
         if (typeof rule.validate === 'function') {
-          return Object.assign(acc, { validate: { ...acc.validate, [validateKey]: rule.validate } });
+          return Object.assign({}, acc, { validate: { ...acc.validate, [validateKey]: rule.validate } });
         }
 
-        return Object.assign(acc, { validate: { ...acc.validate, ...rule.validate } });
+        return Object.assign({}, acc, { validate: { ...acc.validate, ...rule.validate } });
       }
 
-      return Object.assign(acc, rule);
+      return Object.assign({}, acc, rule);
     }, {}) ?? {}
   );
 };

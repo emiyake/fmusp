@@ -1,52 +1,43 @@
-import type React from 'react';
-
 import { useNavigateToNextRoute } from '@app/core/route/navigate-to-next-route.hook';
 import { sendAnalyticsEvent } from '@app/domain/analytics';
-import { useLogin } from '@app/domain/login/login.use-case';
 import { AnalyticsEvent } from '@app/model';
-import { Button, LinkButton, Separator, TextInput } from '@atomic';
-import { Flex } from '@atomic/obj.flex';
-import { Form, FormField } from '@atomic/obj.form';
+import { useLogin } from '@app/modules/auth/use-login';
+import { Button, Flex, Form, FormField, LinkButton, Separator, TextInput } from '@atomic';
+
 import { useFormFieldWatch } from '@atomic/obj.form/hook/form-field-watch.hook';
 import * as Validators from '@atomic/obj.form/validators';
-import { useNavigate } from 'react-router';
-import { AuthPageWrapper } from './auth-page-wrapper.component';
+import React from 'react';
 import { AuthRoutes } from './auth.routes';
+import { AuthPageWrapper } from './auth-page-wrapper.component';
 
 interface LoginFormData {
   email: string;
   password: string;
 }
 
-const DEV_EMAIL = 'user.taqtile.1@taqtile.com.br';
-const DEV_PASSWORD = '1234qwer';
+const DEV_EMAIL = 'edmar.miyake@gmail.com';
+const DEV_PASSWORD = '123';
 
 const LoginPage: React.FC = () => {
   const { navigateToNextRoute } = useNavigateToNextRoute();
-  const navigate = useNavigate();
 
-  const { login, loading } = useLogin({
-    onCompleted: () => {
-      sendAnalyticsEvent(AnalyticsEvent.Login);
-      navigateToNextRoute();
-    },
-  });
+  const { login, loading, data } = useLogin();
 
   const handleSubmit = (data: LoginFormData) => {
-    if (import.meta.env.DEV) {
-      console.warn('login.page.tsx. Bypassing login. Remove this in the project');
-      navigate('/');
-      return;
-    }
-
-    login({ data });
+    login(data.email, data.password);
   };
+
+  React.useEffect(() => {
+    if (data?.user) {
+      sendAnalyticsEvent(AnalyticsEvent.Login);
+      navigateToNextRoute();
+    }
+  }, [data, navigateToNextRoute]);
 
   return (
     <AuthPageWrapper title="Login">
       <Form onSubmit={handleSubmit}>
         <LoginFields />
-
         <Button loading={loading} variant="primary" type="submit">
           Login
         </Button>

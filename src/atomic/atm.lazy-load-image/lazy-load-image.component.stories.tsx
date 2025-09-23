@@ -1,10 +1,8 @@
-import type * as React from 'react';
-
-import type { Meta } from '@storybook/react';
-
 import Logo from '@assets/img/img_logo.png';
 import { H2, H3 } from '@atomic/atm.typography';
 import { Col, Grid, Row } from '@atomic/obj.grid';
+import type { Meta } from '@storybook/react';
+import type * as React from 'react';
 
 import { LazyLoadImage as LazyLoadImageComponent, type LazyLoadImageProps } from './lazy-load-image.component';
 

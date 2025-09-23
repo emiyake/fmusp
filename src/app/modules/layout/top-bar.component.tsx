@@ -1,10 +1,9 @@
-import { Link } from 'react-router';
-
 import { AppIcon } from '@app/components';
 import { Button } from '@atomic/atm.button';
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { HamburgerButton } from '@atomic/atm.hamburger-button';
 import { Flex } from '@atomic/obj.flex';
+import { Link } from 'react-router';
 import { layoutStrings } from './layout.strings';
 import { style } from './top-bar.component.style';
 
@@ -31,8 +30,8 @@ export const TopBar: React.FC<TopBarProps> = props => {
               <img data-cy="logo" alt={strings.logoAlt} className="h-[40px]" src={AppIcon.Logo} />
             </Link>
           </Flex>
-          <Flex hAlign="end" className="hidden md:flex">
-            <Button onClick={props.onLogout} link className="intro-x text-fixed-white">
+          <Flex hAlign="end" vAlign="center" className="hidden md:flex">
+            <Button onClick={props.onLogout} link className="intro-x mr-md text-fixed-white">
               <FaIcon.SignOut />
               {strings.logout}
             </Button>
