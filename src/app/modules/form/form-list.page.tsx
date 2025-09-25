@@ -48,8 +48,12 @@ export const FormListPage: React.FC = () => {
     setSearchParams({ page: page.toString() });
   };
 
-  const handleNewForm = () => {
-    void executeCreate();
+  const handleNewForm = async () => {
+    const result = await executeCreate();
+    console.log(result);
+    if (result?.data) {
+      navigate(generatePath(FormRoute.Detail, { id: result.data.id }));
+    }
   };
 
   return (

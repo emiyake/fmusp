@@ -30,38 +30,34 @@ export const CheckboxFieldEntityComponent = createEntityComponent(
 
     const [items, setItems] = useState<string[]>([]);
 
-    const addUnique = (value: string) => {
-      setItems(prev => Array.from(new Set([...prev, value])));
+    const handleChange = (option: string[]) => {
+      setItems(option);
+      props.setValue(option);
     };
 
-    const removeUnique = (value: string) => {
-      setItems(prev => prev.filter(item => item !== value));
-    };
-
-    const handleChange = (e: any, option: string) => {
-      if (e.target.checked) {
-        addUnique(option);
-      } else {
-        removeUnique(option);
-      }
-    };
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies: Intentional, as props.setValue stability cannot be guaranteed
     useEffect(() => {
-      props.setValue(items);
-    }, [items]);
+      if (props.entity.value) {
+        setItems(props.entity.value);
+      } else {
+        props.setValue([]);
+      }
+    }, [props.entity.value, props.setValue]);
 
     return (
       <div>
-        <InputLabel htmlFor={id} aria-required={props.entity.attributes.required}>
+        <InputLabel
+          htmlFor={id}
+          aria-required={props.entity.attributes.required}
+          isRequired={props.entity.attributes.required}>
           {props.entity.attributes.label.trim() ? props.entity.attributes.label : 'Label'}
         </InputLabel>
         {props.entity.attributes.options.map((option: string, index: number) => (
           <CheckboxInput
+            value={items}
             key={index + option}
             checkboxId={option}
             name={id + option}
-            onChange={(e: any) => handleChange(e, option)}>
+            onChange={(v: any) => handleChange(v)}>
             {option}
           </CheckboxInput>
         ))}

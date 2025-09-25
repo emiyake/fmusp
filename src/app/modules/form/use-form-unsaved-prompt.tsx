@@ -20,7 +20,6 @@ export function useUnsavedChangesPrompt({ when, onConfirmLeave, onCancelLeave }:
     React.useCallback(
       (e: BeforeUnloadEvent) => {
         if (!when) return;
-        // browsers modernos exigem setar returnValue (texto customizado é ignorado)
         e.preventDefault();
         e.returnValue = '';
       },
@@ -34,7 +33,6 @@ export function useUnsavedChangesPrompt({ when, onConfirmLeave, onCancelLeave }:
   React.useEffect(() => {
     if (blocker.state !== 'blocked') return;
 
-    // Você pode trocar por um modal customizado do seu design system
     const ok = window.confirm('Você tem alterações não salvas. Deseja realmente sair desta página?');
 
     if (ok) {

@@ -1,8 +1,9 @@
 import { Placeholder } from '@app/components';
 import { useSupabase } from '@app/core/use-supabase';
-import { Button, Card, FaIcon, LoadingState, ShimmerBox } from '@atomic';
+import { Button, Card, FaIcon, Flex, H3, LinkButton, LoadingState, ShimmerBox } from '@atomic';
 import type React from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router';
 import { tv } from 'tailwind-variants';
 import { formatTimestampToDate } from '../utils';
 import type { Patient } from './patient.model';
@@ -47,7 +48,7 @@ export const PatientHistory: React.FC<PatientHistoryProps> = props => {
   }, [fetchHistory]);
 
   return (
-    <LoadingState loading={loadingHistory} error={!!errorHistory} data={!!history && history.length > 0}>
+    <LoadingState loading={loadingHistory && !history} error={!!errorHistory} data={!!history && history.length > 0}>
       <LoadingState.Shimmer>
         <ShimmerBox height="32px" margin="10px 32px" width="50%" />
         <ShimmerBox height="32px" margin="10px 32px" width="40%" />
@@ -65,7 +66,7 @@ export const PatientHistory: React.FC<PatientHistoryProps> = props => {
         ) : (
           <HistoryItem
             icon={<FaIcon.Star />}
-            date={formatTimestampToDate(props.patient?.profile.created_at)}
+            date={formatTimestampToDate(props.patient?.created_at)}
             user={`${props.patient?.profile.first_name} ${props.patient?.profile.last_name}`}
             event="cadastrou um paciente"
           />
@@ -78,15 +79,30 @@ export const PatientHistory: React.FC<PatientHistoryProps> = props => {
             {history?.map((history: PatientHistoryModel) => (
               <HistoryItem
                 key={history.id}
-                icon={<FaIcon.Star />}
+                icon={history.form_is_consultation ? <FaIcon.Consultation /> : <FaIcon.Survey />}
                 date={formatTimestampToDate(history.created_at)}
-                user={`${history.form_title}`}
-                event="realizou uma pesquisa"
-              />
+                user={`${history.profile.first_name} ${history.profile.last_name}`}
+                event={`${history.form_is_consultation ? 'realizou uma consulta' : 'realizou uma pesquisa'}`}
+                link={`/patient/${props.patient?.id}/consultation/${history.id}`}>
+                <Flex vAlign="start">
+                  <Flex>
+                    <H3>{history.form_title}</H3>
+                  </Flex>
+                  <Flex noGrow>
+                    <LinkButton
+                      variant="neutral"
+                      size="sm"
+                      link
+                      to={`/patient/${props.patient?.id}/consultation/${history.id}`}>
+                      <FaIcon.ExternalLink className="size-md" />
+                    </LinkButton>
+                  </Flex>
+                </Flex>
+              </HistoryItem>
             ))}
             <HistoryItem
               icon={<FaIcon.Star />}
-              date={formatTimestampToDate(props.patient?.profile.created_at)}
+              date={formatTimestampToDate(props.patient?.created_at)}
               user={`${props.patient?.profile.first_name} ${props.patient?.profile.last_name}`}
               event="cadastrou um paciente"
             />
@@ -103,6 +119,7 @@ interface HistoryItemProps {
   event: string;
   children?: React.ReactNode;
   icon?: React.ReactNode;
+  link?: string;
 }
 
 const HistoryItem = (props: HistoryItemProps) => {
@@ -119,7 +136,10 @@ const HistoryItem = (props: HistoryItemProps) => {
         </div>
         {/* Title */}
         <div className={title()}>
-          <span className={name()}>{props.user}</span> {props.event}
+          <span className={name()}>{props.user}</span>{' '}
+          <Link to={props.link || ''} className={props.link ? 'text-primary' : ''}>
+            {props.event}
+          </Link>
         </div>
       </div>
       {/* Card */}

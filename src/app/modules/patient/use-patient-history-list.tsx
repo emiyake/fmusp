@@ -10,7 +10,7 @@ export function usePatientHistoryList() {
   const execute = useCallback(() => {
     const queryBuilder = supabase
       .from('patient_history')
-      .select('*', { count: 'exact' })
+      .select('*, profile(user_id, first_name, last_name)', { count: 'exact' })
       .order('created_at', { ascending: false });
     executeList(queryBuilder);
   }, [executeList, supabase.from]);

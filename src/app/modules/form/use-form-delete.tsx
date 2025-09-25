@@ -3,19 +3,16 @@ import { useSupabase } from '@app/core/use-supabase';
 import { useCallback } from 'react';
 import type { Form } from './form.model';
 
-export function useFormCreate() {
+export function useFormDelete(id: string) {
   const supabase = useSupabase();
-  const { execute: executeUpdate, data, error, loading } = useQuery<Form>();
+  const { execute: executeUpdate } = useQuery<Form>();
 
   const execute = useCallback(() => {
-    const queryBuilder = supabase.from('form').insert({ title: 'Nova pesquisa' }).select().single();
+    const queryBuilder = supabase.from('form').delete().match({ id }).single();
     return executeUpdate(queryBuilder);
-  }, [executeUpdate, supabase.from]);
+  }, [executeUpdate, supabase.from, id]);
 
   return {
     execute,
-    data,
-    error,
-    loading,
   };
 }

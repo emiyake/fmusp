@@ -42,7 +42,7 @@ export const RecursiveSideDrawer: React.FC<{ children?: React.ReactNode; level: 
 const style = tv({
   slots: {
     drawer: 'absolute bottom-0 right-0 rounded-tl-lg shadow-2xl animate-fade-left animate-duration-400 ease-in-out',
-    content: 'absolute inset-0 bg-background overflow-y-auto rounded-tl-lg',
+    content: 'absolute inset-0 bg-background overflow-y-auto rounded-tl-lg px-lg py-md',
     leftIcon:
       'bg-background absolute top-[30px] -left-[30px] flex items-center justify-center rounded-tl-lg rounded-bl-lg cursor-pointer size-[36px] animate-fade-left animate-duration-400 ease-in-out',
   },

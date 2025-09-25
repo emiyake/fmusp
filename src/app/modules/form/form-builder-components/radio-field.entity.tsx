@@ -2,7 +2,7 @@ import { InputCaptionError, InputLabel, RadioInput } from '@atomic';
 import { Flex } from '@atomic/obj.flex';
 import { createEntity } from '@coltorapps/builder';
 import { createEntityComponent } from '@coltorapps/builder-react';
-import { useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { z } from 'zod';
 import { LabelAttributeComponent, labelAttribute } from './label.atribute';
 import { OptionsAttributeComponent, optionsAttribute } from './options.attribute';
@@ -27,6 +27,18 @@ export const RadioFieldEntityComponent = createEntityComponent(
   radioFieldEntity,
   function RadioFieldEntityComponent(props) {
     const id = useId();
+    const [item, setItem] = useState<string>('');
+
+    const handleChange = (option: string) => {
+      setItem(option);
+      props.setValue(option);
+    };
+
+    useEffect(() => {
+      if (props.entity.value) {
+        setItem(props.entity.value);
+      }
+    }, [props.entity.value]);
 
     return (
       <div>
@@ -37,7 +49,12 @@ export const RadioFieldEntityComponent = createEntityComponent(
           {props.entity.attributes.label.trim() ? props.entity.attributes.label : 'Label'}
         </InputLabel>
         {props.entity.attributes.options.map((option: string, index: number) => (
-          <RadioInput key={index + option} radioId={option} name={id} onChange={e => props.setValue(e.target.value)}>
+          <RadioInput
+            key={index + option}
+            radioId={option}
+            name={id}
+            onChange={e => handleChange(e.target.value)}
+            value={item}>
             {option}
           </RadioInput>
         ))}
