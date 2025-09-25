@@ -35,13 +35,14 @@ export const CheckboxFieldEntityComponent = createEntityComponent(
       props.setValue(option);
     };
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Intentional, as props.setValue stability cannot be guaranteed
     useEffect(() => {
       if (props.entity.value) {
         setItems(props.entity.value);
       } else {
         props.setValue([]);
       }
-    }, [props.entity.value, props.setValue]);
+    }, [props.entity.value]);
 
     return (
       <div>

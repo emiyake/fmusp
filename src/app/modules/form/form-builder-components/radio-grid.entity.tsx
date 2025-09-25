@@ -83,6 +83,7 @@ export const RadioGridFieldEntityComponent = createEntityComponent(
                       <RadioInput
                         key={index + column}
                         radioId={column}
+                        value={selected[row]}
                         name={row}
                         onChange={() => handleChange(row, column)}
                         checked={!!props.entity.value?.[row]}
