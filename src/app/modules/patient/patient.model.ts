@@ -1,13 +1,11 @@
+import type { Profile } from '@app/modules/profile';
+
 export interface Patient {
   id: string;
+  created_at: string;
   name: string;
   birthdate: string;
   mothers_name: string;
   gender: string;
-  profile: {
-    user_id: string;
-    first_name: string;
-    last_name: string;
-    created_at: string;
-  };
+  profile: Profile;
 }

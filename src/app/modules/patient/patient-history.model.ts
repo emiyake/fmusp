@@ -1,3 +1,6 @@
+import type { Profile } from '@app/modules/profile';
+import type { Patient } from './patient.model';
+
 export interface PatientHistory {
   id: string;
   form_id: string;
@@ -6,4 +9,6 @@ export interface PatientHistory {
   form_data: Record<string, any>;
   form_is_consultation: boolean;
   created_at: string;
+  profile: Profile;
+  patient: Patient;
 }

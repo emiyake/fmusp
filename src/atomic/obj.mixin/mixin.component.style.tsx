@@ -10,5 +10,5 @@ export const textMaxLines = (maxLines: number, lineHeight: number, adjustment = 
   margin: 0;
 `;
 
-export const focusStyles =
-  'focus-within:ring-offset-1 focus-within:ring-inset focus-within:ring-primary/50 focus-within:ring-2';
+export const focusStyles = '';
+// 'focus-within:ring-offset-1 focus-within:ring-inset focus-within:ring-primary/50 focus-within:ring-2';

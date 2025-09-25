@@ -5,11 +5,12 @@ import { BodySecondary, Button, Card, Col, DD, DL, DT, FaIcon, Flex, Grid, H1, H
 import Tippy from '@tippyjs/react';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router';
-
+import { generatePath, Outlet, useNavigate, useParams } from 'react-router';
+import { PatientRoute } from './patient.routes';
 import { PatientHistory } from './patient-history.component';
 import { PatientThumb } from './patient-thumb.component';
 import { usePatientDetail } from './use-patient-detail';
+import { usePatientHistoryCreate } from './use-patienty-history-create';
 
 export const PatientDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +18,7 @@ export const PatientDetailPage: React.FC = () => {
   const [menuVisibleConsultation, setMenuVisibleConsultation] = useState(false);
 
   const { data: patient, loading: _loading, error: _error } = usePatientDetail(id || '');
+  const { execute: executeCreateHistory } = usePatientHistoryCreate();
   const {
     data: formsSurvey,
     loading: loadingFormsSurvey,
@@ -31,8 +33,8 @@ export const PatientDetailPage: React.FC = () => {
   } = useFormListConsultation();
   const { execute: fetchForm } = useFormDetail();
 
-  const _navigate = useNavigate();
-  _navigate;
+  const navigate = useNavigate();
+
   useEffect(() => {
     void executeListSurvey();
     void executeListConsultation();
@@ -40,16 +42,19 @@ export const PatientDetailPage: React.FC = () => {
 
   const handleNewConsult = async (formId: string) => {
     const form = await fetchForm(formId);
-
     if (form?.data) {
+      const result = await executeCreateHistory({
+        patient_id: patient?.id,
+        form_id: form.data.id,
+        form_title: form.data.title,
+        form_structure: form.data.form_structure,
+        form_is_consultation: form.data.is_consultation,
+      });
+      if (result?.data) {
+        navigate(generatePath(PatientRoute.Consultation, { id: patient?.id, historyId: result.data.id }));
+      }
     }
     setMenuVisibleConsultation(false);
-  };
-  const handleNewSurvey = async (formId: string) => {
-    const form = await fetchForm(formId);
-    console.log(form);
-
-    setMenuVisibleSurvey(false);
   };
 
   return (
@@ -164,7 +169,7 @@ export const PatientDetailPage: React.FC = () => {
                               variant="neutral"
                               link
                               className="justify-start px-sm"
-                              onClick={() => handleNewSurvey(form.id || '')}
+                              onClick={() => handleNewConsult(form.id || '')}
                               key={form.id}>
                               <FaIcon.Plus />
                               {form.title}

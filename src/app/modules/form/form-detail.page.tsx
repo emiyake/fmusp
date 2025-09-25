@@ -191,14 +191,6 @@ export const FormDetailPage = () => {
                     />
                   )}
 
-                  {!root.length ? (
-                    <Placeholder
-                      title="Formulário vazio"
-                      message="Clique no botão abaixo para adicionar um elemento"
-                      icon={FaIcon.Circle}
-                    />
-                  ) : null}
-
                   <div className={activeTabIndex === 0 ? 'block' : 'hidden'}>
                     <InputLabel>Tipo de formulário</InputLabel>
                     <Flex className="mt-sm mb-md">
@@ -217,6 +209,17 @@ export const FormDetailPage = () => {
                         Pesquisa
                       </RadioInput>
                     </Flex>
+                  </div>
+
+                  {!root.length ? (
+                    <Placeholder
+                      title="Formulário vazio"
+                      message="Clique no botão abaixo para adicionar um elemento"
+                      icon={FaIcon.Circle}
+                    />
+                  ) : null}
+
+                  <div className={activeTabIndex === 0 ? 'block' : 'hidden'}>
                     <TabBuilder
                       builderStore={builderStore}
                       onFocus={setActiveEntityId}

@@ -1,42 +1,10 @@
-import { Button, Card } from '@atomic';
-import type { BuilderStore, EntitiesValues, InterpreterStore, Schema } from '@coltorapps/builder';
-import { InterpreterEntities, useInterpreterStore } from '@coltorapps/builder-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { basicFormBuilder, entitiesComponents } from './form-builder-components/form-builder';
+import { Card, Separator } from '@atomic';
+import type { BuilderStore, EntitiesValues, Schema } from '@coltorapps/builder';
+import { useCallback, useEffect, useState } from 'react';
+import { Form } from './form-builder-components/form.component';
+import type { basicFormBuilder } from './form-builder-components/form-builder';
 
-function Form(props: {
-  interpreterStore: InterpreterStore<typeof basicFormBuilder>;
-  onSubmit: () => void;
-  onValidationFail: () => void;
-}) {
-  async function handleSubmit() {
-    const result = await props.interpreterStore.validateEntitiesValues();
-
-    if (result.success) {
-      props.onSubmit();
-    } else {
-      props.onValidationFail();
-    }
-  }
-
-  return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-
-        void handleSubmit();
-      }}
-      className="grid gap-lg"
-      noValidate>
-      <InterpreterEntities interpreterStore={props.interpreterStore} components={entitiesComponents} />
-      <div className="flex justify-end">
-        <Button type="submit">Submit</Button>
-      </div>
-    </form>
-  );
-}
-
-function PreviewJsonCard(props: { json?: Record<string, unknown> }) {
+function _PreviewJsonCard(props: { json?: Record<string, unknown> }) {
   return (
     <Card>
       <Card.Item className="max-h-96 overflow-auto py-4">
@@ -51,7 +19,7 @@ export function TabPreview(props: {
   activeEntityId?: string | null;
   onEntityError: (id: string) => void;
 }) {
-  const [schema, setSchema] = useState<Schema<typeof basicFormBuilder>>();
+  const [schema, setSchema] = useState<Schema<typeof basicFormBuilder>>({ entities: {}, root: [] });
 
   useEffect(() => {
     const result = async () => {
@@ -71,34 +39,18 @@ export function TabPreview(props: {
     result();
   }, [props.builderStore, props.onEntityError, props.activeEntityId]);
 
-  const submitAttemptedRef = useRef(false);
+  const [_previewValues, setPreviewValues] = useState<EntitiesValues<typeof basicFormBuilder>>();
 
-  const interpreterStore = useInterpreterStore(basicFormBuilder, schema ?? { entities: {}, root: [] }, {
-    events: {
-      onEntityValueUpdated(payload) {
-        if (submitAttemptedRef.current) {
-          void interpreterStore.validateEntityValue(payload.entityId);
-        }
-      },
-    },
-  });
-
-  const [previewValues, setPreviewValues] = useState<EntitiesValues<typeof basicFormBuilder>>();
-
-  const handleSubmit = useCallback(() => {
-    setPreviewValues(interpreterStore.getEntitiesValues());
-  }, [interpreterStore]);
+  const handleSubmit = useCallback((values: EntitiesValues<typeof basicFormBuilder>) => {
+    setPreviewValues(values);
+  }, []);
 
   return (
     <div>
-      <Form
-        interpreterStore={interpreterStore}
-        onSubmit={handleSubmit}
-        // biome-ignore lint/suspicious/noAssignInExpressions: intentional
-        onValidationFail={() => (submitAttemptedRef.current = true)}
-      />
-      <PreviewJsonCard json={previewValues} />
-      <PreviewJsonCard json={schema} />
+      <Form schema={schema} onSubmit={handleSubmit} />
+      <Separator />
+      {/* <PreviewJsonCard json={previewValues} />
+      <PreviewJsonCard json={schema} /> */}
     </div>
   );
 }
