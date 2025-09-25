@@ -54,6 +54,12 @@ export const RadioGridFieldEntityComponent = createEntityComponent(
       props.setValue(selected);
     }, [selected]);
 
+    useEffect(() => {
+      if (props.entity.value) {
+        setSelected(props.entity.value);
+      }
+    }, [props.entity.value]);
+
     return (
       <div>
         <InputLabel
