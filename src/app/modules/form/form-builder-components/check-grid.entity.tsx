@@ -45,19 +45,9 @@ export const CheckGridFieldEntityComponent = createEntityComponent(
 
     const [selected, setSelected] = useState<{ [key: string]: string[] }>({});
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, row: string, column: string) => {
+    const handleChange = (e: string[], row: string) => {
       setSelected(prev => {
-        const prevArray = Array.isArray(prev[row]) ? prev[row] : [];
-        if (e.target.checked) {
-          // Add column if not already present
-          if (!prevArray.includes(column)) {
-            return { ...prev, [row]: [...prevArray, column] };
-          }
-          return prev;
-        }
-        // Remove column from array
-        const newArray = prevArray.filter(col => col !== column);
-        return { ...prev, [row]: newArray };
+        return { ...prev, [row]: e };
       });
     };
 
@@ -67,6 +57,14 @@ export const CheckGridFieldEntityComponent = createEntityComponent(
     useEffect(() => {
       props.setValue(selected);
     }, [selected]);
+
+    useEffect(() => {
+      if (props.entity.value) {
+        setSelected(props.entity.value);
+      } else {
+        setSelected({});
+      }
+    }, [props.entity.value]);
 
     return (
       <div>
@@ -97,9 +95,10 @@ export const CheckGridFieldEntityComponent = createEntityComponent(
                       <CheckboxInput
                         key={index + column}
                         checkboxId={column}
+                        value={selected[row]}
                         name={row}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement> | string[]) =>
-                          handleChange(e as React.ChangeEvent<HTMLInputElement>, row, column)
+                        onChange={(e: string[] | React.ChangeEvent<HTMLInputElement>) =>
+                          handleChange(e as string[], row)
                         }
                       />
                     </div>
