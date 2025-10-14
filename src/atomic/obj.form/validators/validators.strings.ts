@@ -16,8 +16,8 @@ export const strings = {
   passwordSpecialChars: 'A senha deve ter no mínimo um caractere especial',
   required: 'O campo é obrigatório',
   date: {
-    invalidFormat: 'Insira uma data válida.',
-    future: 'Uma data futura é inválida.',
-    past: 'Essa data é muito antiga.',
+    invalidFormat: 'Insira uma data válida',
+    future: 'Uma data futura é inválida',
+    past: 'Essa data é muito antiga',
   },
 };

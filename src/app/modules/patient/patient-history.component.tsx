@@ -34,18 +34,18 @@ export const PatientHistory: React.FC<PatientHistoryProps> = props => {
           schema: 'public',
           table: 'patient_history',
         },
-        () => fetchHistory(),
+        () => fetchHistory(props.patient?.id || ''),
       )
       .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase.channel, supabase.removeChannel, fetchHistory]);
+  }, [supabase.channel, supabase.removeChannel, fetchHistory, props.patient?.id]);
 
   useEffect(() => {
-    fetchHistory();
-  }, [fetchHistory]);
+    fetchHistory(props.patient?.id || '');
+  }, [fetchHistory, props.patient?.id]);
 
   return (
     <LoadingState loading={loadingHistory && !history} error={!!errorHistory} data={!!history && history.length > 0}>

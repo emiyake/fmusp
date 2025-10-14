@@ -1,4 +1,4 @@
-import { DatePicker } from '@atomic/atm.date-picker';
+import { DatePickerInput } from '@atomic/atm.date-picker';
 import { Flex } from '@atomic/obj.flex';
 import * as React from 'react';
 
@@ -32,17 +32,17 @@ export const DatePickerRange: React.FC<DatePickerRangeProps> = props => {
 
   return (
     <Flex>
-      <DatePicker
+      <DatePickerInput
         startDate={startDate}
         endDate={endDate}
-        onValueChange={handleStartValueChange}
+        onChange={handleStartValueChange}
         placeholder={props.placeholderStart}
         showTimeSelect={props.showTimeSelect}
       />
-      <DatePicker
+      <DatePickerInput
         endDate={endDate}
         startDate={startDate}
-        onValueChange={handleEndValueChange}
+        onChange={handleEndValueChange}
         placeholder={props.placeholderEnd}
         showTimeSelect={props.showTimeSelect}
         endSelect

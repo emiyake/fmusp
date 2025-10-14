@@ -1,7 +1,7 @@
 import { Button } from '@atomic/atm.button';
 import { Card } from '@atomic/atm.card';
 import { CheckboxInput } from '@atomic/atm.checkbox/checkbox-input.component';
-import { DatePicker } from '@atomic/atm.date-picker';
+import { DatePickerInput } from '@atomic/atm.date-picker';
 import { Divider } from '@atomic/atm.divider';
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { FileInput } from '@atomic/atm.file-input/file-input.component';
@@ -137,11 +137,11 @@ export const FormsPage: React.FC = () => {
             <Divider className="my-md" />
             <Card.Item>
               <InputLabel>Date and time</InputLabel>
-              <DatePicker placeholder="Click here to select" showTimeSelect />
+              <DatePickerInput placeholder="Click here to select" showTimeSelect />
             </Card.Item>
             <Card.Item>
               <InputLabel>Date</InputLabel>
-              <DatePicker placeholder="Click here to select" />
+              <DatePickerInput placeholder="Click here to select" />
             </Card.Item>
           </Card>
 

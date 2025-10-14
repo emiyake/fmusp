@@ -85,29 +85,38 @@ export const PatientDetailPage: React.FC = () => {
                       </Flex>
                     </Flex>
                   </Col>
-                  <Col xs={12} md={4} className="border-neutral-soft pl-lg md:border-l">
-                    <H3>Dados do paciente</H3>
-                    {patient?.mothers_name && (
-                      <Flex vAlign="center">
-                        <FaIcon.Mother />
-                        <DL vertical>
-                          <DT>Nome da mãe</DT>
-                          <DD>{patient?.mothers_name}</DD>
-                        </DL>
+                  <Col xs={12} md={8} className="border-neutral-soft pl-lg md:border-l">
+                    <Flex hAlign="between" vAlign="center">
+                      <H3>Dados do paciente</H3>
+                      <Button variant="primary" outlined size="sm">
+                        Editar
+                      </Button>
+                    </Flex>
+                    <Flex vAlign="center">
+                      <Flex>
+                        {patient?.mothers_name && (
+                          <Flex vAlign="center">
+                            <FaIcon.Mother />
+                            <DL vertical>
+                              <DT>Nome da mãe</DT>
+                              <DD>{patient?.mothers_name}</DD>
+                            </DL>
+                          </Flex>
+                        )}
                       </Flex>
-                    )}
-                    {patient?.gender && (
-                      <Flex vAlign="center">
-                        {patient?.gender === 'male' ? <FaIcon.Male /> : <FaIcon.Female />}
-                        <DL vertical>
-                          <DT>Gênero</DT>
-                          <DD>{patient?.gender === 'male' ? 'Masculino' : 'Feminino'}</DD>
-                        </DL>
+                      <Flex>
+                        {patient?.gender && (
+                          <Flex vAlign="center">
+                            {patient?.gender === 'male' ? <FaIcon.Male /> : <FaIcon.Female />}
+                            <DL vertical>
+                              <DT>Gênero</DT>
+                              <DD>{patient?.gender === 'male' ? 'Masculino' : 'Feminino'}</DD>
+                            </DL>
+                          </Flex>
+                        )}
                       </Flex>
-                    )}
-                  </Col>
-                  <Col xs={12} md={4} className="border-neutral-soft pl-lg md:border-l">
-                    <H3>Último de atendimento</H3>
+                      <Flex noGrow></Flex>
+                    </Flex>
                   </Col>
                 </Row>
               </Card.Item>

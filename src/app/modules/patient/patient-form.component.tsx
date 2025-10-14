@@ -1,44 +1,54 @@
-import { Button, Card, DatePicker, Flex, Form, FormField, H1, SelectInput, TextInput } from '@atomic';
+import {
+  Button,
+  DatePickerInput,
+  DateValidator,
+  Form,
+  FormField,
+  RequiredValidator,
+  SelectInput,
+  TextInput,
+} from '@atomic';
+import type { Patient } from './patient.model';
 
-export const PatientForm: React.FC = () => {
-  const handleSubmit = (data: any) => {
-    console.log(data);
-  };
+export interface PatientFormData {
+  name: string;
+  mothersName: string;
+  birthdate: Date;
+  gender: string;
+}
 
+interface PatientFormProps {
+  onSubmit: (data: PatientFormData) => void;
+  loading: boolean;
+  patient?: Patient;
+}
+
+export const PatientForm: React.FC<PatientFormProps> = ({ onSubmit, loading }) => {
   return (
-    <Form onSubmit={handleSubmit}>
-      <Card>
-        <Card.Item>
-          <Flex hAlign="between" vAlign="center">
-            <H1 className="!m-0">Paciente</H1>
-            <Button size="sm" variant="secondary">
-              Editar
-            </Button>
-          </Flex>
-        </Card.Item>
-        <Card.Item>
-          <div className="md:w-[50%]">
-            <FormField name="name" label="Nome" defaultValue="João da Silva">
-              <TextInput readOnly />
-            </FormField>
-            <FormField name="mothersName" label="Nome da mãe" defaultValue="Maria da Silva">
-              <TextInput readOnly />
-            </FormField>
-            <FormField name="birthdate" label="Data de nascimento" className="md:w-[50%]">
-              <DatePicker initialEndDate={new Date()} filterDate={date => date <= new Date()} />
-            </FormField>
-            <FormField name="gender" label="Gênero" className="md:w-[50%]">
-              <SelectInput className="flex-1">
-                <option value="male">Masculino</option>
-                <option value="female">Feminino</option>
-              </SelectInput>
-            </FormField>
-          </div>
-        </Card.Item>
-      </Card>
-
-      <Button type="submit" className="mt-md">
-        Submit
+    <Form<PatientFormData> onSubmit={onSubmit}>
+      <div className="md:w-[50%]">
+        <FormField name="name" label="Nome" validators={[RequiredValidator()]}>
+          <TextInput />
+        </FormField>
+        <FormField name="mothersName" label="Nome da mãe" validators={[RequiredValidator()]}>
+          <TextInput />
+        </FormField>
+        <FormField
+          name="birthdate"
+          label="Data de nascimento"
+          className="md:w-[50%]"
+          validators={[RequiredValidator(), DateValidator({ minDate: new Date(1900, 1, 1), maxDate: new Date() })]}>
+          <DatePickerInput filterDate={date => date <= new Date()} />
+        </FormField>
+        <FormField name="gender" label="Gênero" className="md:w-[50%]" defaultValue="male">
+          <SelectInput className="flex-1">
+            <option value="male">Masculino</option>
+            <option value="female">Feminino</option>
+          </SelectInput>
+        </FormField>
+      </div>
+      <Button type="submit" className="mt-md" loading={loading}>
+        Salvar
       </Button>
     </Form>
   );
