@@ -16,7 +16,7 @@ export function usePatientList() {
 
   const execute = useCallback(
     (vars: ListVars) => {
-      const queryBuilder = supabase.from('patient').select('*', { count: 'exact' });
+      const queryBuilder = supabase.from('patient').select('*', { count: 'exact' }).is('deleted_at', null);
       executeList(queryBuilder, vars.page);
     },
     [executeList, supabase.from],

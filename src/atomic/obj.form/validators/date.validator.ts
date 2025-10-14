@@ -34,7 +34,15 @@ export const DateValidator = <T extends FieldValues>(params?: DateValidatorParam
   }
 
   const dateSchema = z.preprocess(
-    val => formatDateToISO(String(val)),
+    val => {
+      if (val instanceof Date) {
+        const year = val.getFullYear();
+        const month = String(val.getMonth() + 1).padStart(2, '0');
+        const day = String(val.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+      return formatDateToISO(String(val));
+    },
     !!params?.maxDate || params?.minDate ? baseDateSchema.pipe(dateCoerce) : baseDateSchema,
   );
 

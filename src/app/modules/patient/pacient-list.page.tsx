@@ -22,13 +22,14 @@ import {
 } from '@atomic';
 import type React from 'react';
 import { useEffect } from 'react';
-import { generatePath, useSearchParams } from 'react-router';
+import { generatePath, useNavigate, useSearchParams } from 'react-router';
 import type { Patient } from './patient.model';
 import { PatientRoute } from './patient.routes';
 import { usePatientList } from './use-patient-list';
 
 export const PatientListPage: React.FC = () => {
   const { data: patients, loading, error, totalPages, execute, currentPage } = usePatientList();
+  const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -41,13 +42,17 @@ export const PatientListPage: React.FC = () => {
     setSearchParams({ page: page.toString() });
   };
 
+  const handleNewPatient = () => {
+    navigate(generatePath(PatientRoute.New));
+  };
+
   return (
     <Grid>
       <Row>
         <Col>
           <Flex hAlign="between" vAlign="center">
             <H1>Pacientes</H1>
-            <Button variant="primary" size="sm">
+            <Button variant="primary" size="sm" onClick={handleNewPatient}>
               Novo paciente
             </Button>
           </Flex>

@@ -13,6 +13,7 @@ interface DatePickerBaseProps {
   showTimeSelect?: boolean;
   disabled?: boolean;
   endSelect?: boolean;
+  value?: Date;
   filterDate?: (date: Date) => boolean;
   onFocusChange?: (focused: boolean) => void;
 }
@@ -22,7 +23,7 @@ interface DatePickerUncontrolledProps extends DatePickerBaseProps {
   endDate?: never;
   initialStartDate?: Date;
   initialEndDate?: Date;
-  onValueChange?: (date: Date) => void;
+  onChange?: (date: Date) => void;
 }
 
 interface DatePickerControlledProps extends DatePickerBaseProps {
@@ -30,12 +31,12 @@ interface DatePickerControlledProps extends DatePickerBaseProps {
   initialEndDate?: never;
   startDate?: Date;
   endDate?: Date;
-  onValueChange: (date: Date) => void;
+  onChange: (date: Date) => void;
 }
 
 export type DatePickerProps = DatePickerUncontrolledProps | DatePickerControlledProps;
 
-export const DatePicker: React.FC<DatePickerProps> = props => {
+export const DatePickerInput: React.FC<DatePickerProps> = props => {
   const [startDate, setStartDate] = React.useState<Date | undefined>(props.initialStartDate);
   const [endDate, setEndDate] = React.useState<Date | undefined>(props.initialEndDate);
 
@@ -55,14 +56,14 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
     } else if (!props.initialStartDate) {
       setStartDate(date);
     }
-    props.onValueChange?.(date);
+    props.onChange?.(date);
   };
 
   const handleFocusChange = (focused: boolean) => () => {
     props.onFocusChange?.(focused);
   };
 
-  const start = props.startDate ?? startDate;
+  const start = props.value ?? props.startDate ?? startDate;
   const end = props.endDate ?? endDate;
 
   return (
@@ -87,3 +88,5 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
     </div>
   );
 };
+
+DatePickerInput.displayName = 'DatePickerInput';

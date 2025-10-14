@@ -10,6 +10,7 @@ import { SideDrawerLayout } from '@app/modules/layout/side-drawer.layout';
 import { PatientConsultationPage, PatientRoute } from '@app/modules/patient';
 import { PatientListPage } from '@app/modules/patient/pacient-list.page';
 import { PatientDetailPage } from '@app/modules/patient/patient-detail.page';
+import { PatientNewPage } from '@app/modules/patient/patient-new.page';
 import { useAuthorized } from '@app/route-guard/useAuthGuard.hook';
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { SampleRoutes, sampleMenuLinks } from '@atomic-samples/sample.routes';
@@ -44,6 +45,7 @@ export const router = createBrowserRouter(
           <Route path={FormRoute.List} element={<FormListPage />} />
           <Route path={FormRoute.Detail} element={<FormDetailPage />} />
           <Route path={PatientRoute.List} element={<PatientListPage />} />
+          <Route path={PatientRoute.New} element={<PatientNewPage />} />
           <Route path={PatientRoute.Detail} element={<PatientDetailPage />}>
             <Route path={PatientRoute.Consultation} element={<SideDrawerLayout />}>
               <Route

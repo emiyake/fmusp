@@ -13,6 +13,7 @@ interface FormFieldProps<T extends FieldValues> extends InputType<T> {
 
 const DefaultValues: Record<string, any> = {
   CheckboxInput: [],
+  DatePickerInput: new Date(),
   RadioInput: '',
   SelectInput: '',
   StepperInput: 0,
