@@ -8,8 +8,8 @@ import { usePatientEdit } from './use-patienty-edit';
 
 export const PatientEditPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data } = usePatientDetail(id || '');
-  const { execute, loading: loadingEdit } = usePatientEdit();
+  const { data, loading: loadingDetail } = usePatientDetail(id || '');
+  const { execute, loading: saving } = usePatientEdit(id || '');
   const navigate = useNavigate();
 
   const handleSubmit = async (data: PatientFormData) => {
@@ -24,18 +24,26 @@ export const PatientEditPage: React.FC = () => {
     }
   };
 
+  console.log(data);
+
   return (
     <Grid>
       <Row>
         <Col>
-          <H1>Novo paciente</H1>
+          <H1>Editar paciente</H1>
         </Col>
       </Row>
       <Row>
         <Col>
           <Card>
             <Card.Item>
-              <PatientForm onSubmit={handleSubmit} loading={loadingEdit} patient={data} />
+              <PatientForm
+                onSubmit={handleSubmit}
+                saving={saving}
+                patient={data}
+                isNew={false}
+                loading={loadingDetail}
+              />
             </Card.Item>
           </Card>
         </Col>

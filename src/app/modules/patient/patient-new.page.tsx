@@ -6,7 +6,7 @@ import { PatientForm, type PatientFormData } from './patient-form.component';
 import { usePatientCreate } from './use-patienty-create';
 
 export const PatientNewPage: React.FC = () => {
-  const { execute, loading } = usePatientCreate();
+  const { execute, loading: saving } = usePatientCreate();
   const navigate = useNavigate();
   const handleSubmit = async (data: PatientFormData) => {
     const result = await execute({
@@ -31,7 +31,7 @@ export const PatientNewPage: React.FC = () => {
         <Col>
           <Card>
             <Card.Item>
-              <PatientForm onSubmit={handleSubmit} loading={loading} />
+              <PatientForm onSubmit={handleSubmit} isNew={true} saving={saving} />
             </Card.Item>
           </Card>
         </Col>

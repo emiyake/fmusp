@@ -1,5 +1,6 @@
 import { useUserStore } from '@app/stores';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { isTokenAboutToExpire } from '@utils/token.utils';
 import type React from 'react';
 import { createContext, useContext, useEffect, useMemo } from 'react';
 
@@ -29,7 +30,7 @@ export function useSupabase(): SupabaseClient {
   useEffect(() => {
     const refreshSession = async () => {
       const { data, error } = await client.auth.refreshSession({
-        refresh_token: user?.refreshToken ?? '',
+        refresh_token: user?.token ?? '',
       });
       if (data && !error) {
         setUser({
@@ -37,12 +38,12 @@ export function useSupabase(): SupabaseClient {
           email: user?.email ?? '',
           name: user?.name ?? '',
           token: data.session?.access_token ?? '',
-          refreshToken: data.session?.refresh_token ?? '',
         });
       }
     };
-
-    refreshSession();
+    if (isTokenAboutToExpire(user?.token)) {
+      refreshSession();
+    }
   }, []);
 
   return client;

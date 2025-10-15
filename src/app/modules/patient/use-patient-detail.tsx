@@ -20,7 +20,9 @@ export function usePatientDetail(id: string) {
   );
 
   useEffect(() => {
-    void execute(id);
+    if (id && id.length > 0) {
+      void execute(id);
+    }
   }, [id, execute]);
 
   return {

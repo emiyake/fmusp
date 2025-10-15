@@ -1,6 +1,23 @@
 import { type Form, useFormDetail, useFormListConsultation, useFormListSurvey } from '@app/modules/form';
 import { formatTimestampToDate, timestampToAge } from '@app/modules/utils';
-import { BodySecondary, Button, Card, Col, DD, DL, DT, FaIcon, Flex, Grid, H1, H2, H3, Row } from '@atomic';
+import {
+  BodySecondary,
+  Button,
+  Card,
+  Col,
+  DD,
+  DL,
+  DT,
+  FaIcon,
+  Flex,
+  Grid,
+  H1,
+  H2,
+  H3,
+  LoadingState,
+  Row,
+  ShimmerBox,
+} from '@atomic';
 
 import Tippy from '@tippyjs/react';
 import type React from 'react';
@@ -17,7 +34,7 @@ export const PatientDetailPage: React.FC = () => {
   const [menuVisibleSurvey, setMenuVisibleSurvey] = useState(false);
   const [menuVisibleConsultation, setMenuVisibleConsultation] = useState(false);
 
-  const { data: patient, loading: _loading, error: _error } = usePatientDetail(id || '');
+  const { data: patient, loading: loadingDetail, error: _error } = usePatientDetail(id || '');
   const { execute: executeCreateHistory } = usePatientHistoryCreate();
   const {
     data: formsSurvey,
@@ -69,56 +86,89 @@ export const PatientDetailPage: React.FC = () => {
           <Col>
             <Card double>
               <Card.Item>
-                <Row>
-                  <Col xs={12} md={4} className="flex items-center">
-                    <Flex>
-                      <PatientThumb alt={patient?.name} />
-                      <Flex vAlign="center" row={false} noGap>
-                        <H2 className="text-2xl">{patient?.name}</H2>
-                        <Flex vAlign="center" noGrow className="gap-sm">
-                          <FaIcon.Star />
-                          <BodySecondary>
-                            {formatTimestampToDate(patient?.birthdate)}{' '}
-                            <span className="font-bold">({timestampToAge(patient?.birthdate)} anos)</span>
-                          </BodySecondary>
+                <LoadingState loading={loadingDetail} data={!!patient}>
+                  <LoadingState.Shimmer>
+                    <Row>
+                      <Col xs={12} md={4} className="flex items-center">
+                        <Flex vAlign="center">
+                          <PatientThumb alt={''} />
+                          <div className="flex-1">
+                            <ShimmerBox height="28px" margin="8px 0" width="70%" />
+                            <ShimmerBox height="16px" margin="8px 0" />
+                          </div>
+                        </Flex>
+                      </Col>
+                      <Col xs={12} md={8} className="border-neutral-soft pl-lg md:border-l">
+                        <H3>Dados do paciente</H3>
+
+                        <Flex hAlign="between" vAlign="center">
+                          <div className="flex-1">
+                            <ShimmerBox height="16px" margin="8px 0" />
+                            <ShimmerBox height="16px" margin="8px 0" />
+                          </div>
+                          <div className="flex-1">
+                            <ShimmerBox height="16px" margin="8px 0" />
+                            <ShimmerBox height="16px" margin="8px 0" />
+                          </div>
+                        </Flex>
+                      </Col>
+                    </Row>
+                  </LoadingState.Shimmer>
+                  <Row>
+                    <Col xs={12} md={4} className="flex items-center">
+                      <Flex>
+                        <PatientThumb alt={patient?.name} />
+                        <Flex vAlign="center" row={false} noGap>
+                          <H2 className="text-2xl">{patient?.name}</H2>
+                          <Flex vAlign="center" noGrow className="gap-sm">
+                            <FaIcon.Star />
+                            <BodySecondary>
+                              {formatTimestampToDate(patient?.birthdate)}{' '}
+                              <span className="font-bold">({timestampToAge(patient?.birthdate)} anos)</span>
+                            </BodySecondary>
+                          </Flex>
                         </Flex>
                       </Flex>
-                    </Flex>
-                  </Col>
-                  <Col xs={12} md={8} className="border-neutral-soft pl-lg md:border-l">
-                    <Flex hAlign="between" vAlign="center">
-                      <H3>Dados do paciente</H3>
-                      <Button variant="primary" outlined size="sm">
-                        Editar
-                      </Button>
-                    </Flex>
-                    <Flex vAlign="center">
-                      <Flex>
-                        {patient?.mothers_name && (
-                          <Flex vAlign="center">
-                            <FaIcon.Mother />
-                            <DL vertical>
-                              <DT>Nome da mãe</DT>
-                              <DD>{patient?.mothers_name}</DD>
-                            </DL>
-                          </Flex>
-                        )}
+                    </Col>
+                    <Col xs={12} md={8} className="border-neutral-soft pl-lg md:border-l">
+                      <Flex hAlign="between" vAlign="center">
+                        <H3>Dados do paciente</H3>
+                        <Button
+                          variant="primary"
+                          outlined
+                          size="sm"
+                          onClick={() => navigate(generatePath(PatientRoute.Edit, { id: patient?.id }))}>
+                          Editar
+                        </Button>
                       </Flex>
-                      <Flex>
-                        {patient?.gender && (
-                          <Flex vAlign="center">
-                            {patient?.gender === 'male' ? <FaIcon.Male /> : <FaIcon.Female />}
-                            <DL vertical>
-                              <DT>Gênero</DT>
-                              <DD>{patient?.gender === 'male' ? 'Masculino' : 'Feminino'}</DD>
-                            </DL>
-                          </Flex>
-                        )}
+                      <Flex vAlign="center">
+                        <Flex>
+                          {patient?.mothers_name && (
+                            <Flex vAlign="center">
+                              <FaIcon.Mother />
+                              <DL vertical>
+                                <DT>Nome da mãe</DT>
+                                <DD>{patient?.mothers_name}</DD>
+                              </DL>
+                            </Flex>
+                          )}
+                        </Flex>
+                        <Flex>
+                          {patient?.gender && (
+                            <Flex vAlign="center">
+                              {patient?.gender === 'male' ? <FaIcon.Male /> : <FaIcon.Female />}
+                              <DL vertical>
+                                <DT>Gênero</DT>
+                                <DD>{patient?.gender === 'male' ? 'Masculino' : 'Feminino'}</DD>
+                              </DL>
+                            </Flex>
+                          )}
+                        </Flex>
+                        <Flex noGrow></Flex>
                       </Flex>
-                      <Flex noGrow></Flex>
-                    </Flex>
-                  </Col>
-                </Row>
+                    </Col>
+                  </Row>
+                </LoadingState>
               </Card.Item>
             </Card>
           </Col>
