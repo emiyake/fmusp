@@ -44,7 +44,9 @@ export const PatientHistory: React.FC<PatientHistoryProps> = props => {
   }, [supabase.channel, supabase.removeChannel, fetchHistory, props.patient?.id]);
 
   useEffect(() => {
-    fetchHistory(props.patient?.id || '');
+    if (props.patient?.id && props.patient?.id.length > 0) {
+      fetchHistory(props.patient?.id || '');
+    }
   }, [fetchHistory, props.patient?.id]);
 
   return (
