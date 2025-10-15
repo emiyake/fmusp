@@ -37,7 +37,6 @@ export function useLogin(): {
           email: data.user.email ?? '',
           name: data.user.user_metadata.name ?? '',
           token: data.session?.access_token ?? '',
-          refreshToken: data.session?.refresh_token ?? '',
         });
       }
     },
