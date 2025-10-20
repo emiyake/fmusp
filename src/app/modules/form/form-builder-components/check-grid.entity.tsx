@@ -95,7 +95,7 @@ export const CheckGridFieldEntityComponent = createEntityComponent(
                       <CheckboxInput
                         key={index + column}
                         checkboxId={column}
-                        value={selected[row]}
+                        value={selected[row] ?? []}
                         name={row}
                         onChange={(e: string[] | React.ChangeEvent<HTMLInputElement>) =>
                           handleChange(e as string[], row)

@@ -44,7 +44,7 @@ export const PatientHistory: React.FC<PatientHistoryProps> = props => {
   }, [supabase.channel, supabase.removeChannel, fetchHistory, props.patient?.id]);
 
   useEffect(() => {
-    if (props.patient?.id && props.patient?.id.length > 0) {
+    if (props.patient?.id) {
       fetchHistory(props.patient?.id || '');
     }
   }, [fetchHistory, props.patient?.id]);
@@ -66,12 +66,14 @@ export const PatientHistory: React.FC<PatientHistoryProps> = props => {
         {loadingHistory ? (
           <ShimmerBox height="60px" />
         ) : (
-          <HistoryItem
-            icon={<FaIcon.Star />}
-            date={formatTimestampToDate(props.patient?.created_at)}
-            user={`${props.patient?.profile.first_name} ${props.patient?.profile.last_name}`}
-            event="cadastrou um paciente"
-          />
+          props.patient?.id && (
+            <HistoryItem
+              icon={<FaIcon.Star />}
+              date={formatTimestampToDate(props.patient?.created_at)}
+              user={`${props.patient?.profile.first_name} ${props.patient?.profile.last_name}`}
+              event="cadastrou um paciente"
+            />
+          )
         )}
       </LoadingState.NoData>
       <div>

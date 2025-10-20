@@ -140,6 +140,15 @@ export const AddElementComponent = (props: AddElementComponentProps) => {
                     <FaIcon.Plus />
                     Check Grid Field
                   </Button>
+                  <Divider className="my-xs" />
+                  <Button
+                    variant="neutral"
+                    link
+                    className="justify-start px-sm"
+                    onClick={() => handleAdd({ type: 'fileUpload', attributes: { label: 'File Upload' } })}>
+                    <FaIcon.Plus />
+                    File Upload
+                  </Button>
                 </Flex>
               </Card>
             </div>

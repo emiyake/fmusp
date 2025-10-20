@@ -312,11 +312,13 @@ function FileExamplesComponent() {
       </FormField>
 
       <FormField<FileFormValues> name="dragNDropFile" label="Drag and drop field">
-        <DragNDropFile dropMessage="Drop here">
-          <div className="mb-sm flex h-[100px] w-full items-center justify-center bg-background">Arrastar aqui</div>
-        </DragNDropFile>
+        <DragNDropFile
+          dragMessage="Arraste aqui ou clique para selecionar"
+          dropMessage="Soltar aqui"
+          onChange={data => console.log(data)}
+          isMultipleFiles
+        />
       </FormField>
-
       <Separator />
       <Button type="submit">Submit</Button>
     </Form>

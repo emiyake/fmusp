@@ -98,7 +98,10 @@ export function FormField<TFieldValues extends FieldValues>(
             ref: field.ref,
             name: field.name,
             value: field.value,
-            onChange: field.onChange,
+            onChange: (...args: any[]) => {
+              field.onChange(...args);
+              inputElement.props.onChange?.(...args);
+            },
             onBlur: field.onBlur,
             disabled: disabled || Boolean(inputElement.props.disabled),
           });

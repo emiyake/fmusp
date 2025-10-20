@@ -14,6 +14,7 @@ import {
   DatePickerFieldEntityComponent,
   datePickerFieldEntity,
 } from './date-picker.entity';
+import { FileUploadEntityAttributes, FileUploadEntityComponent, fileUploadEntity } from './file-upload.entity';
 import { ParagraphEntityAttributes, ParagraphEntityComponent, paragraphEntity } from './paragraph.entity';
 import { RadioFieldEntityAttributes, RadioFieldEntityComponent, radioFieldEntity } from './radio-field.entity';
 import {
@@ -36,6 +37,7 @@ export const basicFormBuilder = createBuilder({
     checkboxFieldEntity,
     radioGridFieldEntity,
     checkGridFieldEntity,
+    fileUploadEntity,
   ],
 });
 
@@ -49,6 +51,7 @@ export const entitiesComponents = {
   checkboxField: CheckboxFieldEntityComponent,
   radioGridField: RadioGridFieldEntityComponent,
   checkGridField: CheckGridFieldEntityComponent,
+  fileUpload: FileUploadEntityComponent,
 };
 
 export const entitiesAttributesComponents = {
@@ -61,4 +64,5 @@ export const entitiesAttributesComponents = {
   checkboxField: CheckboxFieldEntityAttributes,
   radioGridField: RadioGridFieldEntityAttributes,
   checkGridField: CheckGridFieldEntityAttributes,
+  fileUpload: FileUploadEntityAttributes,
 };
