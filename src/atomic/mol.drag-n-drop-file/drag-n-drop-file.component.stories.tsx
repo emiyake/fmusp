@@ -16,9 +16,7 @@ export const DragNDropFile: React.FC<DragNDropFileProps & { onClick?: any; onDro
   return (
     <Form onSubmit={props.onClick}>
       <FormField name="file" label="File field with FormField wrapper">
-        <DragNDropFileComponent dropMessage="Soltar aqui">
-          <div className="mb-sm flex h-[100px] w-full items-center justify-center bg-neutral-xsoft">Arrastar aqui</div>
-        </DragNDropFileComponent>
+        <DragNDropFileComponent dropMessage="Soltar aqui" dragMessage="Arrastar aqui" />
       </FormField>
       <Button type="submit" variant="primary">
         Enviar
