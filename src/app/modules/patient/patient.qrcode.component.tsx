@@ -1,14 +1,18 @@
 import { Modal } from '@atomic/obj.modal';
 import { QRCodeSVG } from 'qrcode.react';
 
-export const PatientQRCode: React.FC<{
+type PatientQRCodeProps = {
   openModal: boolean;
   setOpenModal: (open: boolean) => void;
-}> = ({ openModal, setOpenModal }) => {
+  token_patient: string | null;
+};
+
+export const PatientQRCode: React.FC<PatientQRCodeProps> = ({ openModal, setOpenModal, token_patient }) => {
   return (
     <Modal opened={openModal} onClose={() => setOpenModal(false)}>
       <h2>Código QR do Paciente</h2>
-      <QRCodeSVG value="hacksp.org" />
+
+      {token_patient ? <QRCodeSVG value={token_patient} /> : <p>Gerando código...</p>}
     </Modal>
   );
 };

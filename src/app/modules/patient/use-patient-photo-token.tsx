@@ -3,8 +3,8 @@ import { useSupabase } from '@app/core/use-supabase';
 import { useCallback } from 'react';
 
 interface PhotoTempVars {
-  id: string;
-  patient_id: string;
+  id: number;
+  patient_id: number;
 }
 export function usePatientPhotoToken() {
   const supabase = useSupabase();
