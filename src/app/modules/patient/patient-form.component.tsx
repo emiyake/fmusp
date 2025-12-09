@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import type { Patient } from './patient.model';
 import { PatientQRCode } from './patient.qrcode.component';
+import { usePhotoTempQuery } from './use-patient-get-photo-token';
 import { usePatientPhotoToken } from './use-patient-photo-token';
 
 export interface PatientFormData {
@@ -43,19 +44,29 @@ export const PatientForm: React.FC<PatientFormProps> = ({
   const [openModal, setOpenModal] = useState(false);
   const [tokenPatient, setTokenPatient] = useState<string | null>(null);
 
-  const { execute: createPhotoToken, error: photoTokenError, loading: photoTokenLoading } = usePatientPhotoToken();
+  const { execute: createPhotoToken, loading: photoTokenLoading } = usePatientPhotoToken();
+  const { execute: getPhoto } = usePhotoTempQuery();
 
   const handlePhotoUpload = async (patientId: string) => {
-    const token_photo = Math.floor(Math.random() * 10_000_000_000);
+    const pid = Number(patientId);
 
-    const result = await createPhotoToken({
-      id: token_photo,
-      patient_id: Number(patientId),
+    const existing = await getPhoto({ patient_id: pid });
+
+    if (existing) {
+      const expires = new Date(existing.expired_at);
+      if (expires.getTime() > Date.now()) {
+        return existing.id.toString();
+      }
+    }
+
+    const newToken = Math.floor(Math.random() * 10_000_000_000);
+
+    await createPhotoToken({
+      id: newToken,
+      patient_id: pid,
     });
 
-    console.log('photo_temp result', result, photoTokenError);
-
-    return token_photo;
+    return newToken.toString();
   };
 
   const handleOpenModal = async () => {
@@ -63,11 +74,9 @@ export const PatientForm: React.FC<PatientFormProps> = ({
       return;
     }
 
-    // gera token e salva no estado
     const token = await handlePhotoUpload(patient.id);
-    setTokenPatient(token.toString());
+    setTokenPatient(token);
 
-    // abre modal
     setOpenModal(true);
   };
 
