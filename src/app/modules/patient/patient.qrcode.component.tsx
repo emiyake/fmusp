@@ -1,3 +1,4 @@
+import { LinkButton } from '@atomic';
 import { Modal } from '@atomic/obj.modal';
 import { QRCodeSVG } from 'qrcode.react';
 
@@ -13,7 +14,12 @@ export const PatientQRCode: React.FC<PatientQRCodeProps> = ({ openModal, setOpen
       <h2>Código QR do Paciente</h2>
 
       {token_patient ? (
-        <QRCodeSVG value={'https://4b5089282ebd.ngrok-free.app/patient/' + token_patient + '/photo'} />
+        <>
+          <QRCodeSVG value={'https://4b5089282ebd.ngrok-free.app/patient/' + token_patient + '/photo'} />
+          <LinkButton to={'https://4b5089282ebd.ngrok-free.app/patient/' + token_patient + '/photo'} target="_blank">
+            Abrir link
+          </LinkButton>
+        </>
       ) : (
         <p>Gerando código...</p>
       )}

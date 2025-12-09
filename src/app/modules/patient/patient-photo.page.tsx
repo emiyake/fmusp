@@ -75,9 +75,15 @@ export const PatientPhotoPage: React.FC<PatientPhotoPageProps> = ({ onCapture })
     return <div>Token expirado ou inválido para este paciente.</div>;
   }
 
+  const patientId = id ? Number(id) : null;
+
+  if (!patientId || Number.isNaN(patientId)) {
+    return <div>ID do paciente inválido.</div>;
+  }
+
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      <PatientPhotoComponent onCapture={handleCapture} />
+      <PatientPhotoComponent onCapture={handleCapture} patientId={patientId} />
     </div>
   );
 };
