@@ -1,0 +1,89 @@
+import { LoadingState, ShimmerBox } from '@atomic';
+import { useEffect, useState } from 'react';
+import Camera, { FACING_MODES } from 'react-html5-camera-photo';
+import { useParams } from 'react-router';
+import 'react-html5-camera-photo/build/css/index.css';
+import { usePhotoTempQuery } from './use-patient-get-photo-token';
+
+interface PatientPhotoPageProps {
+  onCapture?: (dataUri: string) => void;
+}
+
+export const PatientPhotoPage: React.FC<PatientPhotoPageProps> = ({ onCapture }) => {
+  const { id } = useParams<{ id: string }>();
+  const { execute: getPhoto } = usePhotoTempQuery();
+
+  const [checking, setChecking] = useState(true);
+  const [tokenValid, setTokenValid] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const validateToken = async () => {
+      if (!id) {
+        setChecking(false);
+        setTokenValid(false);
+        return;
+      }
+
+      const pid = Number(id);
+      if (Number.isNaN(pid)) {
+        setChecking(false);
+        setTokenValid(false);
+        return;
+      }
+
+      const existing = await getPhoto({ id: pid });
+
+      if (cancelled) return;
+
+      if (!existing) {
+        setTokenValid(false);
+        setChecking(false);
+        return;
+      }
+
+      const expires = new Date(existing.expired_at);
+      const now = Date.now();
+
+      setTokenValid(expires.getTime() > now);
+      setChecking(false);
+    };
+
+    validateToken();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id, getPhoto]);
+
+  const handleTakePhoto = (dataUri: string) => {
+    console.log('ID da rota:', id);
+    onCapture?.(dataUri);
+  };
+
+  if (checking) {
+    return (
+      <LoadingState loading={true} data={true}>
+        <LoadingState.Shimmer>
+          <ShimmerBox height="240px" margin="24px 0" width="100%" />
+        </LoadingState.Shimmer>
+      </LoadingState>
+    );
+  }
+
+  if (!tokenValid) {
+    return <div>Token expirado ou inválido para este paciente.</div>;
+  }
+
+  return (
+    <div>
+      <Camera
+        onTakePhoto={handleTakePhoto}
+        idealFacingMode={FACING_MODES.ENVIRONMENT}
+        isImageMirror={false}
+        isMaxResolution={true}
+      />
+    </div>
+  );
+};

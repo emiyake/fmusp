@@ -12,6 +12,7 @@ import { PatientListPage } from '@app/modules/patient/pacient-list.page';
 import { PatientDetailPage } from '@app/modules/patient/patient-detail.page';
 import { PatientEditPage } from '@app/modules/patient/patient-edit.page';
 import { PatientNewPage } from '@app/modules/patient/patient-new.page';
+import { PatientPhotoPage } from '@app/modules/patient/patient-photo.page';
 import { useAuthorized } from '@app/route-guard/useAuthGuard.hook';
 import { FaIcon } from '@atomic/atm.fa-icon';
 import { SampleRoutes, sampleMenuLinks } from '@atomic-samples/sample.routes';
@@ -44,6 +45,7 @@ export const router = createBrowserRouter(
         <Route element={<Layout links={[...links, ...sampleMenuLinks]} />}>
           <Route index element={<Navigate to={PatientRoute.List} />} />
           <Route path={FormRoute.List} element={<FormListPage />} />
+          <Route path={PatientRoute.Photo} element={<PatientPhotoPage />} />
           <Route path={FormRoute.Detail} element={<FormDetailPage />} />
           <Route path={PatientRoute.List} element={<PatientListPage />} />
           <Route path={PatientRoute.New} element={<PatientNewPage />} />
