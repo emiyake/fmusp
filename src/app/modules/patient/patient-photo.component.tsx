@@ -3,9 +3,11 @@ import type React from 'react';
 import { useState } from 'react';
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
+import { usePatientSendPhoto } from './use-patient-send-photo';
 
 interface PatientPhotoComponentProps {
   onCapture: (dataUri: string) => void;
+  patientId: number;
 }
 
 const processImageTo9x16 = (dataUri: string): Promise<string> => {
@@ -76,8 +78,9 @@ const transformTo1x1 = (dataUri: string): Promise<string> => {
   });
 };
 
-export const PatientPhotoComponent: React.FC<PatientPhotoComponentProps> = ({ onCapture }) => {
+export const PatientPhotoComponent: React.FC<PatientPhotoComponentProps> = ({ onCapture, patientId }) => {
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
+  const { execute: sendPhoto, loading: sendingPhoto, error: sendError } = usePatientSendPhoto();
 
   const handleTakePhoto = async (dataUri: string) => {
     const processedPhoto = await processImageTo9x16(dataUri);
@@ -88,10 +91,17 @@ export const PatientPhotoComponent: React.FC<PatientPhotoComponentProps> = ({ on
     setCapturedPhoto(null);
   };
 
-  const handleConfirmPhoto = async () => {
+  const handleSendPhoto = async () => {
     if (capturedPhoto) {
       const squarePhoto = await transformTo1x1(capturedPhoto);
-      onCapture(squarePhoto);
+      const result = await sendPhoto({
+        patientId,
+        photoDataUri: squarePhoto,
+      });
+
+      if (result) {
+        onCapture(squarePhoto);
+      }
     }
   };
 
@@ -107,12 +117,13 @@ export const PatientPhotoComponent: React.FC<PatientPhotoComponentProps> = ({ on
             className="max-w-full max-h-full w-auto h-auto aspect-[9/16] rounded-lg shadow-md object-contain"
           />
         </div>
+        {sendError && <div className="text-sm text-feedback-danger-medium">{sendError}</div>}
         <div className="flex gap-md mt-sm">
-          <Button variant="secondary" outlined onClick={handleRetakePhoto}>
+          <Button variant="secondary" outlined onClick={handleRetakePhoto} disabled={sendingPhoto}>
             Tirar outra foto
           </Button>
-          <Button variant="primary" onClick={handleConfirmPhoto}>
-            Confirmar foto
+          <Button variant="primary" onClick={handleSendPhoto} loading={sendingPhoto}>
+            Enviar foto
           </Button>
         </div>
       </div>
