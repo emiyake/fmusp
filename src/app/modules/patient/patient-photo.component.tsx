@@ -95,7 +95,7 @@ export const PatientPhotoComponent: React.FC<PatientPhotoComponentProps> = ({ on
     if (capturedPhoto) {
       const squarePhoto = await transformTo1x1(capturedPhoto);
       const result = await sendPhoto({
-        patientId,
+        tokenId: patientId, // Este é o token ID, não o patient_id real
         photoDataUri: squarePhoto,
       });
 
