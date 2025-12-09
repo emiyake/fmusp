@@ -1,8 +1,7 @@
 import { LoadingState, ShimmerBox } from '@atomic';
 import { useEffect, useState } from 'react';
-import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import { useParams } from 'react-router';
-import 'react-html5-camera-photo/build/css/index.css';
+import { PatientPhotoComponent } from './patient-photo.component';
 import { usePhotoTempQuery } from './use-patient-get-photo-token';
 
 interface PatientPhotoPageProps {
@@ -57,7 +56,7 @@ export const PatientPhotoPage: React.FC<PatientPhotoPageProps> = ({ onCapture })
     };
   }, [id, getPhoto]);
 
-  const handleTakePhoto = (dataUri: string) => {
+  const handleCapture = (dataUri: string) => {
     console.log('ID da rota:', id);
     onCapture?.(dataUri);
   };
@@ -77,13 +76,14 @@ export const PatientPhotoPage: React.FC<PatientPhotoPageProps> = ({ onCapture })
   }
 
   return (
-    <div>
-      <Camera
-        onTakePhoto={handleTakePhoto}
-        idealFacingMode={FACING_MODES.ENVIRONMENT}
-        isImageMirror={false}
-        isMaxResolution={true}
-      />
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}>
+      <PatientPhotoComponent onCapture={handleCapture} />
     </div>
   );
 };
