@@ -4,4 +4,5 @@ export const PatientRoute = {
   Edit: '/patient/:id/edit',
   Consultation: '/patient/:id/consultation/:historyId',
   New: '/patient/new',
+  Photo: '/patient/:id/photo',
 };

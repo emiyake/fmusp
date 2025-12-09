@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 
 interface PatientCreateVars {
   id?: string;
+  photoId?: string;
   name: string;
   birthdate: string;
   mothers_name: string;

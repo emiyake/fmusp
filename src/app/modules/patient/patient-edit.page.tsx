@@ -43,6 +43,7 @@ export const PatientEditPage: React.FC = () => {
                 patient={data}
                 isNew={false}
                 loading={loadingDetail}
+                isEditing={true}
               />
             </Card.Item>
           </Card>
