@@ -4,8 +4,10 @@ import { useCallback } from 'react';
 
 interface PhotoTempVars {
   id: number;
+  expired_at?: Date;
   patient_id: number;
 }
+
 export function usePatientPhotoToken() {
   const supabase = useSupabase();
   const { execute: executeCreate, data, error, loading } = useQuery<PhotoTempVars>();
