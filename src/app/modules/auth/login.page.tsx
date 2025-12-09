@@ -15,8 +15,8 @@ interface LoginFormData {
   password: string;
 }
 
-const DEV_EMAIL = 'edmar.miyake@gmail.com';
-const DEV_PASSWORD = '123';
+const DEV_EMAIL = 'dweg0@icloud.com';
+const DEV_PASSWORD = '12345678';
 
 const LoginPage: React.FC = () => {
   const { navigateToNextRoute } = useNavigateToNextRoute();

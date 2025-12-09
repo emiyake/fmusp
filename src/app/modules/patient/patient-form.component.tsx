@@ -10,6 +10,8 @@ import {
   ShimmerBox,
   TextInput,
 } from '@atomic';
+import { Modal } from '@atomic/obj.modal';
+import { useState } from 'react';
 import type { Patient } from './patient.model';
 
 export interface PatientFormData {
@@ -28,6 +30,8 @@ interface PatientFormProps {
 }
 
 export const PatientForm: React.FC<PatientFormProps> = ({ onSubmit, saving, patient, loading, isNew = true }) => {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <LoadingState loading={loading} data={isNew || !!patient}>
       <LoadingState.Shimmer>
@@ -36,7 +40,16 @@ export const PatientForm: React.FC<PatientFormProps> = ({ onSubmit, saving, pati
         <ShimmerBox height="24px" margin="10px 0" />
       </LoadingState.Shimmer>
       <Form<PatientFormData> onSubmit={onSubmit} key={patient?.id}>
+        <Modal opened={openModal} />
         <div className="md:w-[50%]">
+          <FormField name="photo" label="Foto" validators={[RequiredValidator()]}>
+            <Button
+              onClick={() => {
+                setOpenModal(true);
+              }}>
+              Adicionar foto
+            </Button>
+          </FormField>
           <FormField name="name" label="Nome" validators={[RequiredValidator()]} defaultValue={patient?.name}>
             <TextInput />
           </FormField>
