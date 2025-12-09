@@ -10,7 +10,6 @@ import {
   ShimmerBox,
   TextInput,
 } from '@atomic';
-import { Modal } from '@atomic/obj.modal';
 import { useState } from 'react';
 import type { Patient } from './patient.model';
 import { PatientQRCode } from './patient.qrcode.component';
@@ -42,17 +41,34 @@ export const PatientForm: React.FC<PatientFormProps> = ({
   isNew = true,
 }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [tokenPatient, setTokenPatient] = useState<string | null>(null);
 
-  const { execute: createPhotoToken } = usePatientPhotoToken();
+  const { execute: createPhotoToken, error: photoTokenError, loading: photoTokenLoading } = usePatientPhotoToken();
 
   const handlePhotoUpload = async (patientId: string) => {
-    const token_photo = crypto.randomUUID();
-    await createPhotoToken({
+    const token_photo = Math.floor(Math.random() * 10_000_000_000);
+
+    const result = await createPhotoToken({
       id: token_photo,
-      patient_id: patientId,
+      patient_id: Number(patientId),
     });
 
+    console.log('photo_temp result', result, photoTokenError);
+
     return token_photo;
+  };
+
+  const handleOpenModal = async () => {
+    if (!patient?.id) {
+      return;
+    }
+
+    // gera token e salva no estado
+    const token = await handlePhotoUpload(patient.id);
+    setTokenPatient(token.toString());
+
+    // abre modal
+    setOpenModal(true);
   };
 
   return (
@@ -63,14 +79,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({
         <ShimmerBox height="24px" margin="10px 0" />
       </LoadingState.Shimmer>
       <Form<PatientFormData> onSubmit={onSubmit} key={patient?.id}>
-        <PatientQRCode openModal={openModal} setOpenModal={setOpenModal} />
+        <PatientQRCode openModal={openModal} setOpenModal={setOpenModal} token_patient={tokenPatient} />
         <div className="md:w-[50%]">
           {isEditing && (
             <FormField name="photo" label="Foto" validators={[RequiredValidator()]}>
-              <Button
-                onClick={() => {
-                  setOpenModal(true);
-                }}>
+              <Button onClick={handleOpenModal} loading={photoTokenLoading}>
                 Adicionar foto
               </Button>
             </FormField>
@@ -78,11 +91,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
           <FormField name="name" label="Nome" validators={[RequiredValidator()]} defaultValue={patient?.name}>
             <TextInput />
           </FormField>
-          <FormField
-            name="mothersName"
-            label="Nome da mãe"
-            validators={[RequiredValidator()]}
-            defaultValue={patient?.mothers_name}>
+          <FormField name="mothersName" label="Nome da mãe" defaultValue={patient?.mothers_name}>
             <TextInput />
           </FormField>
           <FormField
