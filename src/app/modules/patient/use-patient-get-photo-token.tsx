@@ -3,18 +3,9 @@ import { useQuery } from '@app/core/use-query';
 import { useSupabase } from '@app/core/use-supabase';
 import { useCallback } from 'react';
 
-interface PhotoTempVars {
-  id?: number;
-  expired_at?: Date;
-  patient_id?: number;
-}
-
-// tipo da linha na tabela photo_temp
-interface PhotoTempRow {
-  id: number;
-  patient_id: number;
-  expired_at: string; // vem como string do Supabase
-  created_at: string;
+interface QueryVars {
+  id?: number; // token_id
+  patient_id?: number; // patient_id
 }
 
 export function usePhotoTempQuery() {
@@ -22,13 +13,16 @@ export function usePhotoTempQuery() {
   const { execute: runQuery } = useQuery<any>();
 
   const execute = useCallback(
-    async ({ patient_id }: { patient_id: number }) => {
-      const query = supabase
-        .from('photo_temp')
-        .select('*')
-        .eq('patient_id', patient_id)
-        .order('created_at', { ascending: false })
-        .limit(1);
+    async (vars: QueryVars) => {
+      let query = supabase.from('photo_temp').select('*');
+
+      if (vars.id) {
+        query = query.eq('id', vars.id).limit(1);
+      } else if (vars.patient_id) {
+        query = query.eq('patient_id', vars.patient_id).order('created_at', { ascending: false }).limit(1);
+      } else {
+        return null;
+      }
 
       const result = await runQuery(query);
 

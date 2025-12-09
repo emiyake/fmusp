@@ -19,6 +19,21 @@ export default defineConfig({
     // necessary for segment analytics lib to work
     global: 'globalThis',
   },
+  server: {
+    host: true, // permite acesso externo (0.0.0.0)
+    port: 4000,
+
+    allowedHosts: [
+      "4b5089282ebd.ngrok-free.app",      // host do ngrok
+      "localhost",
+      "127.0.0.1",
+    ],
+
+    hmr: {
+      host: "4b5089282ebd.ngrok-free.app",  // importante p/ hot reload não quebrar
+      protocol: "wss",  // ngrok exige ws seguro
+    },
+  },
   plugins: [react(), tailwindcss()],
   build: {
     emptyOutDir: true,
