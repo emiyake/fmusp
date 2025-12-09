@@ -3,13 +3,14 @@ import { useUserStore } from '@app/stores';
 import { useCallback, useState } from 'react';
 
 interface SendPhotoParams {
-  patientId: number;
+  tokenId: number; // ID do token temporário
   photoDataUri: string;
   bucketName?: string;
 }
 
 interface SendPhotoResult {
   path: string;
+  patientId: number;
 }
 
 export function usePatientSendPhoto() {
@@ -20,7 +21,7 @@ export function usePatientSendPhoto() {
 
   const execute = useCallback(
     async ({
-      patientId,
+      tokenId,
       photoDataUri,
       bucketName = 'patient-photos',
     }: SendPhotoParams): Promise<SendPhotoResult | null> => {
@@ -58,16 +59,31 @@ export function usePatientSendPhoto() {
           }
         }
 
+        // Buscar o patient_id real usando o token temporário
+        const { data: tokenData, error: tokenError } = await supabase
+          .from('photo_temp')
+          .select('patient_id')
+          .eq('id', tokenId)
+          .single();
+
+        if (tokenError || !tokenData) {
+          setError('Token inválido ou expirado');
+          return null;
+        }
+
+        const patientId = tokenData.patient_id;
+
         const response = await fetch(photoDataUri);
         const blob = await response.blob();
 
-        const fileName = `${patientId}/${Date.now()}.jpg`;
+        // Nome do arquivo: perfil_{patient_id}.jpg
+        const fileName = `perfil_${patientId}.jpg`;
         const file = new File([blob], fileName, { type: 'image/jpeg' });
 
-        // Fazer upload para o Supabase Storage com metadados
+        // Fazer upload para o Supabase Storage com metadados (upsert: true para atualizar se existir)
         const { data, error: uploadError } = await supabase.storage.from(bucketName).upload(fileName, file, {
           cacheControl: '3600',
-          upsert: false,
+          upsert: true, // Atualiza se já existir
           metadata: {
             patient_id: patientId.toString(),
             uploaded_at: new Date().toISOString(),
@@ -86,6 +102,7 @@ export function usePatientSendPhoto() {
 
         return {
           path: data.path,
+          patientId,
         };
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error';
