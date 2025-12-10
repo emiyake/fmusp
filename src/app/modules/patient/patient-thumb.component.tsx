@@ -41,7 +41,6 @@ export const PatientThumb: React.FC<PatientThumbProps> = ({
   // Resetar erro quando src mudar
   React.useEffect(() => {
     setImageError(false);
-    // biome-ignore lint/correctness/useExhaustiveDependencies: src é necessário para resetar o erro quando a imagem mudar
   }, [src]);
 
   if (hasImage && !imageError) {

@@ -82,7 +82,7 @@ export const PatientPhotoPage: React.FC<PatientPhotoPageProps> = ({ onCapture })
   }
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden">
       <PatientPhotoComponent onCapture={handleCapture} patientId={patientId} />
     </div>
   );
