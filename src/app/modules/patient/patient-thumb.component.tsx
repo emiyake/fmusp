@@ -41,6 +41,7 @@ export const PatientThumb: React.FC<PatientThumbProps> = ({
   // Resetar erro quando src mudar
   React.useEffect(() => {
     setImageError(false);
+    void src;
   }, [src]);
 
   if (hasImage && !imageError) {
