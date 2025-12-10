@@ -57,9 +57,6 @@ export const PatientListPage: React.FC = () => {
   useEffect(() => {
     const page = Number(searchParams.get('page') ?? '1');
     const q = searchParams.get('q') ?? '';
-
-    if (q !== search) setSearch(q);
-
     void execute({ page, search: q });
   }, [searchParams, execute]);
 
