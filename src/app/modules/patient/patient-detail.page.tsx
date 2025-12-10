@@ -27,6 +27,7 @@ import { PatientRoute } from './patient.routes';
 import { PatientHistory } from './patient-history.component';
 import { PatientThumb } from './patient-thumb.component';
 import { usePatientDetail } from './use-patient-detail';
+import { usePatientGetPhoto } from './use-patient-get-photo';
 import { usePatientHistoryCreate } from './use-patienty-history-create';
 
 export const PatientDetailPage: React.FC = () => {
@@ -35,6 +36,7 @@ export const PatientDetailPage: React.FC = () => {
   const [menuVisibleConsultation, setMenuVisibleConsultation] = useState(false);
 
   const { data: patient, loading: loadingDetail, error: _error } = usePatientDetail(id || '');
+  const { photoUrl: patientPhotoUrl } = usePatientGetPhoto(patient?.id);
   const { execute: executeCreateHistory } = usePatientHistoryCreate();
   const {
     data: formsSurvey,
@@ -117,7 +119,7 @@ export const PatientDetailPage: React.FC = () => {
                   <Row>
                     <Col xs={12} md={4} className="flex items-center">
                       <Flex>
-                        <PatientThumb alt={patient?.name} />
+                        <PatientThumb src={patientPhotoUrl || undefined} alt={patient?.name} />
                         <Flex vAlign="center" row={false} noGap>
                           <H2 className="text-2xl">{patient?.name}</H2>
                           <Flex vAlign="center" noGrow className="gap-sm">

@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { tv } from 'tailwind-variants';
 
 interface PatientThumbProps {
@@ -36,8 +36,15 @@ export const PatientThumb: React.FC<PatientThumbProps> = ({
   const resolvedSize = typeof size === 'number' ? `${size}px` : size;
   const hasImage = !!src;
   const fontSize = typeof size === 'number' ? `${Math.round(size / 3.5)}px` : `calc(${size} / 3.5)`;
+  const [imageError, setImageError] = React.useState(false);
 
-  if (hasImage) {
+  // Resetar erro quando src mudar
+  React.useEffect(() => {
+    setImageError(false);
+    // biome-ignore lint/correctness/useExhaustiveDependencies: src é necessário para resetar o erro quando a imagem mudar
+  }, [src]);
+
+  if (hasImage && !imageError) {
     return (
       <img
         src={src}
@@ -48,6 +55,7 @@ export const PatientThumb: React.FC<PatientThumbProps> = ({
           height: resolvedSize,
           display: 'inline-block',
         }}
+        onError={() => setImageError(true)}
       />
     );
   }
