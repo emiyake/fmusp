@@ -15,8 +15,9 @@ export const PatientQRCode: React.FC<PatientQRCodeProps> = ({ openModal, setOpen
 
       {token_patient ? (
         <>
-          <QRCodeSVG value={'https://4b5089282ebd.ngrok-free.app/patient/' + token_patient + '/photo'} />
-          <LinkButton to={'https://4b5089282ebd.ngrok-free.app/patient/' + token_patient + '/photo'} target="_blank">
+          <QRCodeSVG value={`https://4b5089282ebd.ngrok-free.app/patient/${token_patient}/photo`} />
+
+          <LinkButton to={`https://localhost:4000/patient/${token_patient}/photo`} target="_blank">
             Abrir link
           </LinkButton>
         </>
