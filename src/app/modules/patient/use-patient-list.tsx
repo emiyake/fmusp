@@ -16,7 +16,19 @@ export function usePatientList() {
 
   const execute = useCallback(
     (vars: ListVars) => {
-      const queryBuilder = supabase.from('patient').select('*', { count: 'exact' }).is('deleted_at', null);
+      let queryBuilder = supabase.from('patient').select('*', { count: 'exact' }).is('deleted_at', null);
+
+      // 🔍 FILTRO DE BUSCA
+      if (vars.search && vars.search.trim() !== '') {
+        queryBuilder = queryBuilder.or(`name.ilike.%${vars.search}%, mothers_name.ilike.%${vars.search}%`);
+      }
+
+      // 🔽 ORDER BY opcional
+      if (vars.sortBy) {
+        const dir = vars.sortDir ?? 'asc';
+        queryBuilder = queryBuilder.order(vars.sortBy, { ascending: dir === 'asc' });
+      }
+
       executeList(queryBuilder, vars.page);
     },
     [executeList, supabase.from],

@@ -21,7 +21,7 @@ import {
   TR,
 } from '@atomic';
 import type React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { generatePath, useNavigate, useSearchParams } from 'react-router';
 import type { Patient } from './patient.model';
 import { PatientRoute } from './patient.routes';
@@ -30,20 +30,54 @@ import { usePatientList } from './use-patient-list';
 export const PatientListPage: React.FC = () => {
   const { data: patients, loading, error, totalPages, execute, currentPage } = usePatientList();
   const navigate = useNavigate();
-
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [search, setSearch] = useState(searchParams.get('q') ?? '');
+
+  const debounceUpdateUrl = useMemo(() => {
+    let timeout: any;
+
+    return (value: string) => {
+      clearTimeout(timeout);
+
+      timeout = setTimeout(() => {
+        const params: Record<string, string> = { page: '1' };
+        if (value.trim()) params.q = value.trim();
+        setSearchParams(params);
+      }, 300);
+    };
+  }, [setSearchParams]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearch(value);
+    debounceUpdateUrl(value);
+  };
+
   useEffect(() => {
-    const page = searchParams.get('page') ?? '1';
-    void execute({ page: Number(page) });
+    const page = Number(searchParams.get('page') ?? '1');
+    const q = searchParams.get('q') ?? '';
+
+    if (q !== search) setSearch(q);
+
+    void execute({ page, search: q });
   }, [searchParams, execute]);
 
   const handlePageChange = (page: number) => {
-    setSearchParams({ page: page.toString() });
+    const q = searchParams.get('q') ?? '';
+    const params: Record<string, string> = { page: page.toString() };
+    if (q) params.q = q;
+    setSearchParams(params);
   };
 
   const handleNewPatient = () => {
     navigate(generatePath(PatientRoute.New));
+  };
+
+  const handleRetry = () => {
+    const page = Number(searchParams.get('page') ?? '1');
+    const q = searchParams.get('q') ?? '';
+    void execute({ page, search: q });
   };
 
   return (
@@ -58,27 +92,37 @@ export const PatientListPage: React.FC = () => {
           </Flex>
         </Col>
       </Row>
+
       <Row>
         <Col xs={12} md={6}>
-          <TextInput icon={<FaIcon.Search />} placeholder="Procurar paciente" value="" />
+          <TextInput
+            icon={<FaIcon.Search />}
+            placeholder="Procurar paciente"
+            value={search}
+            onInput={handleSearchChange}
+          />
         </Col>
       </Row>
+
       <Row className="mt-md">
         <Col>
           <LoadingState loading={loading} error={!!error} data={!!patients && patients.length > 0}>
             <LoadingState.Shimmer>
-              <TableShimmer rows={5} cols={3} />
+              <TableShimmer rows={5} cols={4} />
             </LoadingState.Shimmer>
+
             <LoadingState.Error>
-              <Placeholder icon={FaIcon.Circle} title="Nenhum paciente encontrado">
-                <Button variant="primary" size="sm">
+              <Placeholder icon={FaIcon.Circle} title="Erro ao carregar">
+                <Button variant="primary" size="sm" onClick={handleRetry}>
                   Tentar novamente
                 </Button>
               </Placeholder>
             </LoadingState.Error>
+
             <LoadingState.NoData>
-              <Placeholder icon={FaIcon.Circle} title="Nenhum paciente encontrado"></Placeholder>
+              <Placeholder icon={FaIcon.Circle} title="Nenhum paciente encontrado" />
             </LoadingState.NoData>
+
             <div>
               <Card classNameFront="!p-xs intro-y mb-md">
                 <Table>
@@ -90,6 +134,7 @@ export const PatientListPage: React.FC = () => {
                       <TH className="text-left">Nome da mãe</TH>
                     </TR>
                   </THead>
+
                   <TBody>
                     {patients?.map((patient: Patient) => (
                       <TR key={patient.id}>
@@ -110,6 +155,7 @@ export const PatientListPage: React.FC = () => {
                   </TBody>
                 </Table>
               </Card>
+
               <Pagination
                 current={currentPage ?? 1}
                 total={totalPages ?? 0}

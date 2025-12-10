@@ -15,7 +15,7 @@ interface CachedUrl {
 const memoryCache = new Map<string, CachedUrl>();
 
 const CACHE_KEY = 'patient-photos-cache';
-const CACHE_EXPIRY = 50 * 60 * 1000;
+const CACHE_EXPIRY = 5 * 60 * 1000;
 
 function loadCacheFromStorage(): Map<string, CachedUrl> {
   try {
