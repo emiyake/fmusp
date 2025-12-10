@@ -107,18 +107,18 @@ export const PatientPhotoComponent: React.FC<PatientPhotoComponentProps> = ({ on
 
   if (capturedPhoto) {
     return (
-      <div className="flex flex-col items-center justify-center gap-md p-md h-full min-h-0">
-        <div className="text-lg font-medium">Foto capturada</div>
-        <div className="text-sm text-neutral-medium">Deseja tirar outra foto?</div>
-        <div className="flex-1 flex items-center justify-center min-h-0 w-full">
+      <div className="flex h-full min-h-0 flex-col items-center justify-center gap-md p-md">
+        <div className="font-medium text-lg">Foto capturada</div>
+        <div className="text-neutral-medium text-sm">Deseja tirar outra foto?</div>
+        <div className="flex min-h-0 w-full flex-1 items-center justify-center">
           <img
             src={capturedPhoto}
             alt="Foto capturada"
-            className="max-w-full max-h-full w-auto h-auto aspect-[9/16] rounded-lg shadow-md object-contain"
+            className="aspect-[9/16] h-auto max-h-full w-auto max-w-full rounded-lg object-contain shadow-md"
           />
         </div>
-        {sendError && <div className="text-sm text-feedback-danger-medium">{sendError}</div>}
-        <div className="flex gap-md mt-sm">
+        {sendError && <div className="text-feedback-danger-medium text-sm">{sendError}</div>}
+        <div className="mt-sm flex gap-md">
           <Button variant="secondary" outlined onClick={handleRetakePhoto} disabled={sendingPhoto}>
             Tirar outra foto
           </Button>
@@ -131,8 +131,8 @@ export const PatientPhotoComponent: React.FC<PatientPhotoComponentProps> = ({ on
   }
 
   return (
-    <div className="relative w-full h-full min-h-0 overflow-hidden flex items-center justify-center">
-      <div className="relative w-full max-w-full aspect-[9/16] max-h-full overflow-hidden">
+    <div className="relative flex h-full min-h-0 w-full items-center justify-center overflow-hidden">
+      <div className="relative aspect-[9/16] max-h-full w-full max-w-full overflow-hidden">
         <Camera
           onTakePhoto={handleTakePhoto}
           idealFacingMode={FACING_MODES.ENVIRONMENT}
