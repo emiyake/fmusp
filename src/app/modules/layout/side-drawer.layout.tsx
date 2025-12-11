@@ -4,7 +4,7 @@ import { tv } from 'tailwind-variants';
 export const SideDrawerLayout = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(-1);
+  const handleClick = () => navigate('../..', { relative: 'path' });
 
   return (
     <button className={style()} onClick={handleClick} onKeyDown={handleClick} tabIndex={0} type="button">

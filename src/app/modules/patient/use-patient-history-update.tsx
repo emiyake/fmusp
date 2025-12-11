@@ -10,6 +10,7 @@ export function usePatientHistoryUpdate(id?: string) {
   const execute = useCallback(
     (form: PatientHistory) => {
       if (!id) return;
+
       const queryBuilder = supabase.from('patient_history').update(form).match({ id }).select().single();
       return executeUpdate(queryBuilder);
     },

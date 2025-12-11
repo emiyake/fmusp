@@ -1,9 +1,10 @@
+import { useSupabase } from '@app/core/use-supabase';
 import { InputCaptionError, InputLabel } from '@atomic';
 import { DragNDropFile } from '@atomic/mol.drag-n-drop-file';
 import { Flex } from '@atomic/obj.flex';
 import { createEntity } from '@coltorapps/builder';
 import { createEntityComponent } from '@coltorapps/builder-react';
-import { useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { z } from 'zod';
 import { LabelAttributeComponent, labelAttribute } from './label.atribute';
 import { RequiredAttributeComponent, requiredAttribute } from './required-attribute';
@@ -67,6 +68,43 @@ export const FileUploadEntityComponent = createEntityComponent(
   function FileUploadEntityComponent(props) {
     const id = useId();
 
+    const supabase = useSupabase();
+    const [initialPreviews, setInitialPreviews] = useState<{ name: string; type: string; src: string | null }[]>([]);
+    const [loaded, setLoaded] = useState(false);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: cannot garantee supabase.storage stability
+    useEffect(() => {
+      const getUrl = async (path: string) => {
+        const { data } = await supabase.storage.from('form_consultation').createSignedUrl(path, 60 * 60 * 24 * 30);
+        return data?.signedUrl;
+      };
+
+      const loadUrls = async () => {
+        const urls = props.entity.value?.map(file => {
+          if (file.path) {
+            return getUrl(file.path);
+          }
+          return '';
+        });
+        const resolvedUrls = await Promise.all(urls || []);
+
+        setInitialPreviews(
+          props.entity.value?.map((_url, index) => {
+            const file = props.entity.value?.[index];
+            return {
+              name: file?.name || '',
+              type: file?.type || '',
+              src: resolvedUrls[index] || null,
+            };
+          }) || [],
+        );
+      };
+      if (props.entity.value && !loaded) {
+        loadUrls();
+        setLoaded(true);
+      }
+    }, [props.entity.value]);
+
     return (
       <div>
         <InputLabel
@@ -80,6 +118,7 @@ export const FileUploadEntityComponent = createEntityComponent(
           dropMessage="Soltar aqui"
           isMultipleFiles
           onChange={e => props.setValue(e)}
+          initialPreviews={initialPreviews}
         />
         <InputCaptionError hasError>
           {formatError(props.entity.value, props.entity.error)?._errors?.[0]}

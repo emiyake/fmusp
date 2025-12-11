@@ -1,5 +1,5 @@
 import { Button } from '@atomic';
-import type { EntitiesValues, Schema } from '@coltorapps/builder';
+import type { EntitiesErrors, EntitiesValues, Schema } from '@coltorapps/builder';
 import { type GenericEntityProps, InterpreterEntities, useInterpreterStore } from '@coltorapps/builder-react';
 import { useEffect, useRef } from 'react';
 import { basicFormBuilder, entitiesComponents } from './form-builder';
@@ -8,8 +8,8 @@ export function Form(props: {
   schema: Schema<typeof basicFormBuilder>;
   data?: EntitiesValues<typeof basicFormBuilder>;
   onSubmit: (values: EntitiesValues<typeof basicFormBuilder>) => void;
-  onValidationFail?: () => void;
-  onValuesUpdated?: (values: EntitiesValues<typeof basicFormBuilder>) => void;
+  onValidationFail?: (entitiesErrors: EntitiesErrors, values: EntitiesValues<typeof basicFormBuilder>) => void;
+  onValuesUpdated?: (values: EntitiesValues<typeof basicFormBuilder>, callback?: () => void) => void;
   onEntityChildren?: (props: GenericEntityProps<typeof basicFormBuilder>) => void;
   button?: React.ReactNode;
 }) {
@@ -20,14 +20,12 @@ export function Form(props: {
     events: {
       onEntityValueUpdated(payload) {
         if (shouldValidate.current) {
-          props.onValuesUpdated?.(interpreterStore.getEntitiesValues());
           void interpreterStore.validateEntityValue(payload.entityId);
-
           if (autoSubmitTimeoutRef.current) {
             clearTimeout(autoSubmitTimeoutRef.current);
           }
           autoSubmitTimeoutRef.current = setTimeout(() => {
-            void handleSubmit();
+            props.onValuesUpdated?.(payload, handleSubmit);
           }, 800);
         }
       },
@@ -57,7 +55,7 @@ export function Form(props: {
     if (result.success) {
       props.onSubmit(interpreterStore.getEntitiesValues());
     } else {
-      props.onValidationFail?.();
+      props.onValidationFail?.(result.entitiesErrors, interpreterStore.getEntitiesValues());
     }
   }
 

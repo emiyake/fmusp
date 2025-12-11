@@ -18,26 +18,29 @@ import {
   Row,
   ShimmerBox,
 } from '@atomic';
-import type { EntitiesValues, Schema } from '@coltorapps/builder';
-import { useEffect, useMemo, useState } from 'react';
+import type { EntitiesErrors, EntitiesValues, Schema, SchemaEntityWithId } from '@coltorapps/builder';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { generatePath, useNavigate, useParams } from 'react-router';
 import { formatTimestampToDate } from '../utils';
 import { PatientRoute } from './patient.routes';
 import type { PatientHistory } from './patient-history.model';
 import { usePatientHistoryDelete } from './use-patient-history-delete';
 import { usePatientHistoryDetail } from './use-patient-history-detail';
+import { usePatientFileDelete, usePatientFileUpload } from './use-patient-history-file-upload';
 import { usePatientHistoryUpdate } from './use-patient-history-update';
 import { usePatientPreviousHistory } from './use-patient-previous-history';
 
 export const PatientConsultationPage: React.FC = () => {
   const { historyId } = useParams<{ id: string; historyId: string }>();
   const { data: history, loading: loadingHistory, error: errorHistory } = usePatientHistoryDetail(historyId);
-  const { data: previousHistory, execute: executeGetPreviousHistory } = usePatientPreviousHistory();
+  const { data: previousHistory } = usePatientPreviousHistory();
   const { execute: executeUpdate } = usePatientHistoryUpdate(historyId);
   const { execute: executeDelete } = usePatientHistoryDelete(historyId);
   const [savedStatus, setSavedStatus] = useState<'saved' | 'not-saved' | 'saving'>('saved');
   const navigate = useNavigate();
-
+  const { execute: executeFileUpload } = usePatientFileUpload(history?.patient.id);
+  const { execute: executeFileDelete } = usePatientFileDelete(history?.patient.id);
+  const fileListRef = useRef<{ [key: string]: { name: string; path: string }[] }>({});
   const savedStatusText = useMemo(() => {
     switch (savedStatus) {
       case 'saved':
@@ -53,6 +56,10 @@ export const PatientConsultationPage: React.FC = () => {
 
   const handleSubmit = async (values: EntitiesValues<typeof basicFormBuilder>) => {
     setSavedStatus('saving');
+    Object.keys(fileListRef.current).forEach(key => {
+      values[key] = fileListRef.current[key];
+    });
+
     const result = await executeUpdate({ form_data: values } as PatientHistory);
     if (result?.data) {
       setSavedStatus('saved');
@@ -61,8 +68,56 @@ export const PatientConsultationPage: React.FC = () => {
     }
   };
 
-  const handleValuesUpdated = (_values: EntitiesValues<typeof basicFormBuilder>) => {
+  const handleValidationFail = (_entitiesErrors: EntitiesErrors, _valuess: EntitiesValues<typeof basicFormBuilder>) => {
     setSavedStatus('not-saved');
+  };
+
+  const handleValuesUpdated = (values: EntitiesValues<typeof basicFormBuilder>, callback?: () => void) => {
+    const entityId = values.entityId as string;
+
+    const promises = Object.keys(values).map(async key => {
+      const data = values[key];
+
+      const files = Array.isArray(data) && data.filter(item => item instanceof File);
+
+      if (!files) return;
+
+      const currentFileNames = fileListRef.current[entityId]?.map(f => f.name) || [];
+
+      const newFileNames = Array.isArray(files) ? files.map(f => f.name) : [];
+
+      const filesToSave = Array.isArray(files)
+        ? files.filter(f => !currentFileNames.includes(f.name) && f.size < 1024 * 1024 * 20)
+        : [];
+
+      // Arquivos que precisam ser removidos (presentes em fileList mas não em files)
+      const filesToDelete = fileListRef.current[entityId]?.filter(f => !newFileNames.includes(f.name)) || [];
+
+      if (filesToSave?.length > 0) {
+        const res = await executeFileUpload(filesToSave);
+        console.log('res', res);
+        fileListRef.current = {
+          ...fileListRef.current,
+          [entityId]: [...(fileListRef.current?.[entityId] || []), ...res],
+        };
+      }
+
+      if (filesToDelete?.length > 0) {
+        const res = await executeFileDelete(filesToDelete[0].path);
+        if (res) {
+          fileListRef.current = {
+            ...fileListRef.current,
+            [entityId]: fileListRef.current[entityId]?.filter(f => f.path !== res) || [],
+          };
+        }
+      }
+    });
+
+    // Espera todas as promises terminarem antes de continuar
+    Promise.all(promises).then(() => {
+      callback?.();
+      setSavedStatus('not-saved');
+    });
   };
 
   const handleDelete = async () => {
@@ -76,9 +131,17 @@ export const PatientConsultationPage: React.FC = () => {
 
   useEffect(() => {
     if (history?.id) {
-      void executeGetPreviousHistory(history.id, history.form_id, history.created_at);
+      Object.keys(history.form_data).forEach(key => {
+        const data = history.form_data[key];
+
+        if (Array.isArray(data) && data.length > 0 && data[0].path) {
+          fileListRef.current[key] = data as { name: string; path: string }[];
+        }
+      });
+
+      console.log('fileListRef.current', fileListRef.current);
     }
-  }, [history, executeGetPreviousHistory]);
+  }, [history]);
 
   return (
     <Grid>
@@ -123,28 +186,15 @@ export const PatientConsultationPage: React.FC = () => {
                     schema={history?.form_structure as Schema<typeof basicFormBuilder>}
                     data={history?.form_data as EntitiesValues<typeof basicFormBuilder>}
                     onSubmit={handleSubmit}
+                    onValidationFail={handleValidationFail}
                     onValuesUpdated={handleValuesUpdated}
                     onEntityChildren={props => {
                       return (
                         <Flex>
                           <div className="flex-1">{props.children} </div>
-                          {previousHistory?.form_data[props.entity.id] ? (
-                            <div className="flex-1 bg-neutral-xsoft p-md">
-                              {'label' in props.entity.attributes &&
-                              typeof props.entity.attributes.label === 'string' ? (
-                                <Flex hAlign="between">
-                                  <InputLabel>{props.entity.attributes.label}</InputLabel>
-                                  <InputCaption>{formatTimestampToDate(previousHistory.created_at)}</InputCaption>
-                                </Flex>
-                              ) : null}
-                              {props.entity.type === 'textField' || props.entity.type === 'textareaField' ? (
-                                <InputValue className="whitespace-pre-line">
-                                  {previousHistory.form_data[props.entity.id]}
-                                </InputValue>
-                              ) : null}
-                              {/* {JSON.stringify(previousHistory.form_data[props.entity.id])} */}
-                            </div>
-                          ) : null}
+                          {previousHistory?.form_data[props.entity.id] && (
+                            <LastConsultationData data={previousHistory.form_data} entity={props.entity} />
+                          )}
                         </Flex>
                       );
                     }}
@@ -157,5 +207,25 @@ export const PatientConsultationPage: React.FC = () => {
         </div>
       </LoadingState>
     </Grid>
+  );
+};
+
+interface LastConsultationDataProps {
+  data: Record<string, any>;
+  entity: SchemaEntityWithId<typeof basicFormBuilder>;
+}
+const LastConsultationData: React.FC<LastConsultationDataProps> = props => {
+  const previousData = props.data[props.entity.id];
+
+  return (
+    <div className="flex-1 bg-neutral-xsoft p-md">
+      {'label' in props.entity.attributes && typeof props.entity.attributes.label === 'string' ? (
+        <Flex hAlign="between">
+          <InputLabel>{props.entity.attributes.label}</InputLabel>
+          <InputCaption>{formatTimestampToDate(previousData.created_at)}</InputCaption>
+        </Flex>
+      ) : null}
+      {typeof previousData === 'string' && <InputValue className="whitespace-pre-line">{previousData}</InputValue>}
+    </div>
   );
 };

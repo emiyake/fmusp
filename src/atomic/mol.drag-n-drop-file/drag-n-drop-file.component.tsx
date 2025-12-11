@@ -10,10 +10,11 @@ export interface DragNDropFileProps {
   isMultipleFiles?: boolean;
   acceptedTypes?: string[];
   onChange?: (uploaded: File[]) => void;
+  initialPreviews?: { name: string; type: string; src: string | null }[];
 }
 
 export const DragNDropFile: React.FC<DragNDropFileProps> = React.forwardRef(
-  ({ dragMessage, dropMessage, isMultipleFiles, onChange, acceptedTypes = [] }, _ref) => {
+  ({ dragMessage, dropMessage, isMultipleFiles, onChange, acceptedTypes = [], initialPreviews = [] }, _ref) => {
     const [dragging, setDragging] = React.useState<boolean>(false);
     const dropZone = React.useRef<HTMLDivElement>(null);
     const [dragCounter, setDragCounter] = React.useState<number>(0);
@@ -21,7 +22,14 @@ export const DragNDropFile: React.FC<DragNDropFileProps> = React.forwardRef(
     const inputRef = React.useRef<HTMLInputElement>(null);
 
     const [files, setFiles] = React.useState<File[]>([]);
-    const [previews, setPreviews] = useState<{ name: string; type: string; src: string | null }[]>([]);
+    const [previews, setPreviews] = useState<{ name: string; type: string; src: string | null }[]>(initialPreviews);
+
+    React.useEffect(() => {
+      if (initialPreviews.length > 0) {
+        setPreviews(initialPreviews);
+        setFiles(initialPreviews.map(item => new File([], item.name, { type: item.type })));
+      }
+    }, [initialPreviews]);
 
     const handleFiles = React.useCallback(
       (selectedFiles: File[]) => {
@@ -62,7 +70,6 @@ export const DragNDropFile: React.FC<DragNDropFileProps> = React.forwardRef(
             });
           }
         }
-
         // Atualiza o estado acumulando novos arquivos SEM duplicados
         const fileKey = (f: File) => `${f.name}-${f.size}-${f.lastModified}`;
 
@@ -211,7 +218,7 @@ export const DragNDropFile: React.FC<DragNDropFileProps> = React.forwardRef(
             }}>
             {previews.map((file, index) => (
               <div key={file.name} className={style().preview()}>
-                {file.src ? (
+                {file.type?.startsWith('image/') && file.src ? (
                   <img src={file.src} alt={file.name} className={style().previewImage()} />
                 ) : (
                   <div className={style().previewIcon()}>📄</div>
