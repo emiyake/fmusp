@@ -91,7 +91,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
         <PatientQRCode openModal={openModal} setOpenModal={setOpenModal} token_patient={tokenPatient} />
         <div className="md:w-[50%]">
           {isEditing && (
-            <FormField name="photo" label="Foto" validators={[RequiredValidator()]}>
+            <FormField name="photo" label="Foto">
               <Button onClick={handleOpenModal} loading={photoTokenLoading}>
                 Adicionar foto
               </Button>

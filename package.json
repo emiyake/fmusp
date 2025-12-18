@@ -74,6 +74,9 @@
     "web-vitals": "5.1.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
     "@biomejs/biome": "2.2.2",
     "@graphql-codegen/cli": "5.0.7",
     "@graphql-codegen/fragment-matcher": "5.1.0",
